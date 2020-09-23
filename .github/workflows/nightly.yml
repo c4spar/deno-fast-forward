@@ -1,0 +1,32 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  nightly:
+    name: Deno nightly
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macOS-latest, windows-latest, ubuntu-latest]
+        deno_version: [ nightly ]
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v2
+
+      - name: Setup Deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: ${{ matrix.deno_version }}
+
+      - name: Check formatting
+        run: deno fmt --check
+
+      - name: Run linter
+        run: deno lint --unstable
+
+      - name: Run tests
+        run: deno test --allow-read --allow-run
