@@ -1,4 +1,3 @@
-import { blue, readLines } from "./deps.ts";
 import type { Encoding } from "./encoding.ts";
 import { EncodingEventStream } from "./encoding_event_stream.ts";
 import {
@@ -19,7 +18,7 @@ import {
 } from "./events.ts";
 import { FFmpegCommand } from "./ffmpeg_command.ts";
 import { ffprobe } from "./ffprobe.ts";
-import type { MediaInfo, VideoStream } from "./media_info.ts";
+import type { MediaInfo, MediaStream, VideoStream } from "./media_info.ts";
 
 export type EncodingStatus = Deno.ProcessStatus;
 
@@ -199,7 +198,6 @@ export class EncodingProcess {
         }
       })
       .catch(async (err) => {
-        console.log("Failed to retrieve ffmpeg command status:", err);
         const error = new FFmpegCommandStatusFailed({
           encoding: this.#encoding,
           stderrOutput: this.#process && await this.stderrOutput(),
@@ -215,48 +213,24 @@ export class EncodingProcess {
       return;
     }
 
-    // progress event
     if (this.process.stdout) {
-      // deno-lint-ignore no-explicit-any
-      let progressInfoMap: Record<string, any> | undefined;
-
       const videoStream: VideoStream = this.#info.streams
-        .find((stream) => stream.codec_type === "video") as VideoStream;
+        .find((stream: MediaStream) =>
+          stream.codec_type === "video"
+        ) as VideoStream;
+
       const totalFrames: number = parseInt(videoStream.nb_frames);
 
-      for await (let line of readLines(this.process.stdout)) {
-        let [name, value] = line.trim().split("=");
-
-        // convert snake-case to camel-case
-        // name = name.replace(
-        //   /_([a-z])/g,
-        //   (g) => g[1].toUpperCase(),
-        // );
-
-        // frame is the first attribute
-        if (name === "frame") {
-          progressInfoMap = {};
-        }
-
-        if (progressInfoMap) {
-          progressInfoMap[name] = value.trim();
-
-          // progress is the last attribute
-          if (name === "progress") {
-            const progressInfo = progressInfoMap as ProgressInfo;
-            const frames: number = parseInt(progressInfo.frame);
-            const progress: number = Math.trunc(
-              100 / (totalFrames / frames),
-            );
-            const event = new EncodingProgressEvent(
-              this.#encoding,
-              progress,
-              progressInfo,
-            );
-            this.#encoding.emit("progress", event);
-            progressInfoMap = undefined;
-          }
-        }
+      for await (const chunk of Deno.iter(this.process.stdout)) {
+        const progressInfo: ProgressInfo = parseProgressOutput(chunk);
+        const frames: number = parseInt(progressInfo.frame);
+        const progress: number = Math.trunc(100 / (totalFrames / frames));
+        const event = new EncodingProgressEvent(
+          this.#encoding,
+          progress,
+          progressInfo,
+        );
+        this.#encoding.emit("progress", event);
       }
     }
 
@@ -271,4 +245,17 @@ export class EncodingProcess {
       this.#encoding.output === "-" ||
       this.#encoding.output.startsWith("pipe:");
   };
+}
+
+function parseProgressOutput(chunk: Uint8Array): ProgressInfo {
+  return new TextDecoder()
+    .decode(chunk)
+    .trim()
+    .split("\n")
+    .map((line: string) => line.split("="))
+    .reduce((previous: Record<string, string>, current: string[]) => {
+      previous[current[0]] = current[1];
+      return previous;
+      // deno-lint-ignore no-explicit-any
+    }, {}) as any;
 }
