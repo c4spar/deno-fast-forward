@@ -7,7 +7,6 @@ const inputPath = `${rootDir}/fixtures/sample.mp4`;
 
 Deno.test({
   name: "encoding process",
-  sanitizeResources: false,
   async fn() {
     const outputPath = `${rootDir}/.tmp/encoding process.mp4`;
     await ensureDir(`${rootDir}/.tmp`);

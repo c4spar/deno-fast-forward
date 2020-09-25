@@ -37,7 +37,6 @@ export async function ffprobe(
     process = Deno.run({
       cmd,
       cwd,
-      stdin: "piped",
       stdout: "piped",
       stderr: "piped",
     });
@@ -64,6 +63,8 @@ export async function ffprobe(
 
   const status = await process.status();
   if (!status.success) {
+    process.stdout?.close();
+    process.close();
     throw new FFprobeCommandFailed({
       binary,
       cwd,
@@ -75,6 +76,9 @@ export async function ffprobe(
   }
 
   const output = await process.output();
+
+  process.stderr?.close();
+  process.close();
 
   return JSON.parse(
     new TextDecoder().decode(output),

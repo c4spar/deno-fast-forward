@@ -27,7 +27,6 @@ function registerEventListener(encoder: FFmpeg): Array<EncodingEvent | Error> {
 
 Deno.test({
   name: "encoding events",
-  sanitizeResources: false,
   async fn() {
     const outputPath = `${rootDir}/.tmp/encoding events.mp4`;
     await ensureDir(`${rootDir}/.tmp`);

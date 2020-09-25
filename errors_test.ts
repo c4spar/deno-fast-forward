@@ -23,7 +23,6 @@ const inputPath = `${rootDir}/fixtures/sample.mp4`;
 
 Deno.test({
   name: "ffprobe binary not found error",
-  sanitizeResources: false,
   async fn() {
     await assertThrowsAsync(
       () => ffprobe(inputPath, { binary: "fffprobe" }),
@@ -34,7 +33,6 @@ Deno.test({
 
 Deno.test({
   name: "ffprobe binary permission denied error",
-  sanitizeResources: false,
   async fn() {
     await assertThrowsAsync(
       () => ffprobe(inputPath, { binary: new URL(import.meta.url).pathname }),
@@ -45,7 +43,6 @@ Deno.test({
 
 Deno.test({
   name: "ffprobe command failed error",
-  sanitizeResources: false,
   async fn() {
     await assertThrowsAsync(
       () => ffprobe(inputPath, { args: ["--abc"] }),
@@ -56,7 +53,6 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg binary not found error",
-  sanitizeResources: false,
   async fn() {
     const encoding = new Encoding();
     encoding.binary = "fffprobe";
@@ -67,7 +63,6 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg binary permission denied error",
-  sanitizeResources: false,
   async fn() {
     const encoding = new Encoding();
     encoding.binary = new URL(import.meta.url).pathname;
@@ -78,7 +73,6 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg command failed error",
-  sanitizeResources: false,
   async fn() {
     const outputPath: string =
       `${rootDir}/.tmp/ffmpeg command failed error.mp4`;
@@ -105,7 +99,6 @@ Deno.test({
 
 Deno.test({
   name: "encoding process not started error",
-  sanitizeResources: false,
   async fn() {
     const encoding = new Encoding();
     encoding.binary = "ffprobe";
@@ -120,7 +113,6 @@ Deno.test({
 
 Deno.test({
   name: "encoding process already started error",
-  sanitizeResources: false,
   async fn() {
     const outputPath: string =
       `${rootDir}/.tmp/encoding process already started error.mp4`;
@@ -141,7 +133,6 @@ Deno.test({
 
 Deno.test({
   name: "encoding event stream already disposed error",
-  sanitizeResources: false,
   async fn() {
     const eventStream = new EncodingEventStream(
       new EncodingProcess(
