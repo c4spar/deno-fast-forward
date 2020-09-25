@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        deno_version: [ v1.2.0, v1.4.1 ]
+        deno_version: [ v1.2.0, v1.4.2 ]
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
