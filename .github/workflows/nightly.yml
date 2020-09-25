@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macOS-latest, windows-latest, ubuntu-latest]
+        os: [ubuntu-latest]
         deno_version: [ nightly ]
     steps:
       - name: Setup repo
@@ -22,6 +22,13 @@ jobs:
         with:
           deno-version: ${{ matrix.deno_version }}
 
+      - name: Setup FFmpeg
+        run: >
+          sudo add-apt-repository ppa:jonathonf/ffmpeg-4 &&
+          sudo apt update &&
+          sudo apt install ffmpeg &&
+          ffmpeg -version
+
       - name: Check formatting
         run: deno fmt --check
 
@@ -29,4 +36,4 @@ jobs:
         run: deno lint --unstable
 
       - name: Run tests
-        run: deno test --allow-read --allow-run
+        run: deno test --allow-read --allow-run --allow-write
