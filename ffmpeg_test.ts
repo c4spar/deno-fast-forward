@@ -34,7 +34,6 @@ const inputPath = `${rootDir}/fixtures/sample.mp4`;
 
 Deno.test({
   name: "ffmpeg encode",
-  sanitizeResources: false,
   async fn() {
     const outputPath = `${rootDir}/.tmp/ffmpeg encode.mp4`;
     await ensureDir(`${rootDir}/.tmp`);
@@ -66,7 +65,6 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg multi encoding",
-  sanitizeResources: false,
   async fn() {
     const outputPath1 = `${rootDir}/.tmp/ffmpeg multi encoding 1.mp4`;
     const outputPath2 = `${rootDir}/.tmp/ffmpeg multi encoding 2.webm`;
@@ -114,7 +112,6 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg multiplexing",
-  sanitizeResources: false,
   async fn() {
     const outputPath1_1 = `${rootDir}/.tmp/ffmpeg multiplexing 1.1.mp4`;
     const outputPath1_2 = `${rootDir}/.tmp/ffmpeg multiplexing 1.2.mp4`;
@@ -142,6 +139,7 @@ Deno.test({
     for await (const process of iterator) {
       process.run();
       await process.status();
+      process.close();
     }
 
     const outputFileExists1: boolean = await exists(outputPath1_1);
@@ -157,7 +155,6 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg encoding options",
-  sanitizeResources: false,
   async fn() {
     const outputPath = `${rootDir}/.tmp/ffmpeg encoding.mp4`;
     await ensureDir(`${rootDir}/.tmp`);

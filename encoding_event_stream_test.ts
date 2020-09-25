@@ -16,7 +16,6 @@ const inputPath = `${rootDir}/fixtures/sample.mp4`;
 
 Deno.test({
   name: "custom encoding event stream",
-  sanitizeResources: false,
   async fn() {
     const outputPath = `${rootDir}/.tmp/custom encoding event stream.mp4`;
     await ensureDir(`${rootDir}/.tmp`);
@@ -82,7 +81,6 @@ Deno.test({
 
 Deno.test({
   name: "multi encoding event stream",
-  sanitizeResources: false,
   async fn() {
     const outputPath1 = `${rootDir}/.tmp/multi encoding event stream 1.mp4`;
     const outputPath2 = `${rootDir}/.tmp/multi encoding event stream 2.mp4`;
@@ -99,8 +97,9 @@ Deno.test({
     let progressEvent: EncodingProgressEvent | undefined;
     let endEvent: EncodingEndEvent | undefined;
     for await (const encodingProcess of encoder) {
+      const events = new EncodingEventStream(encodingProcess);
       encodingProcess.run();
-      for await (const event of encodingProcess) {
+      for await (const event of events) {
         switch (event.type) {
           case "start":
             startEvent = event;
@@ -119,6 +118,7 @@ Deno.test({
         }
       }
       const status = await encodingProcess.status();
+      encodingProcess.close();
       assertEquals(status.code, 0);
       assertEquals(status.success, true);
     }
