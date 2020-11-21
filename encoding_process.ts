@@ -231,7 +231,7 @@ export class EncodingProcess {
     if (this.process.stdout) {
       const videoStream: VideoStream = this.#info.streams
         .find((stream: MediaStream) =>
-          stream.codec_type === "video",
+          stream.codec_type === "video"
         ) as VideoStream;
 
       const totalFrames: number = parseInt(videoStream.nb_frames);

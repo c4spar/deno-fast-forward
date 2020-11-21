@@ -7,7 +7,7 @@ import {
 } from "./dev_deps.ts";
 import { Encoding } from "./encoding.ts";
 import type { EncodingProcess } from "./encoding_process.ts";
-import { ffmpeg, FFmpeg } from "./ffmpeg.ts";
+import { FFmpeg, ffmpeg } from "./ffmpeg.ts";
 
 const rootDir: string = dirname(import.meta.url).replace(/^file:\/\//, "");
 const inputPath = `${rootDir}/fixtures/sample.mp4`;

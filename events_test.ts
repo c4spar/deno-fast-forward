@@ -1,6 +1,6 @@
 import {
-  assertNotEquals,
   assertEquals,
+  assertNotEquals,
   dirname,
   ensureDir,
 } from "./dev_deps.ts";
