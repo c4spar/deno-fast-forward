@@ -1,25 +1,29 @@
 <h1 align="center">Fast Forward</h1>
+
 <p align="center">An easy to use ffmpeg module for Deno.</p>
-<p align="center">
-  <a href="https://github.com/c4spar/deno-fast-forward/releases">
-    <img alt="Version" src="https://img.shields.io/github/v/release/c4spar/deno-fast-forward?logo=github" />
+
+<p align="center" class="badges-container">
+  <a href="https://github.com/c4spar/deno-fast-forward/actions?query=workflow%3ATest">
+    <img alt="Build status" src="https://github.com/c4spar/deno-fast-forward/workflows/Test/badge.svg?branch=main" />
   </a>
   <a href="https://github.com/c4spar/deno-fast-forward/releases">
-    <img alt="Release date" src="https://img.shields.io/github/release-date/c4spar/deno-fast-forward?logo=github&color=blue" />
+    <img alt="Version" src="https://img.shields.io/github/v/release/c4spar/deno-fast-forward?logo=github&color=blue&label=latest" />
   </a>
   <a href="https://deno.land/">
     <img alt="Deno version" src="https://img.shields.io/badge/deno-^1.2.0-blue?logo=deno" />
   </a>
-  <a href="https://github.com/c4spar/deno-fast-forward/actions?query=workflow%3Aci">
-    <img alt="Lint status" src="https://github.com/c4spar/deno-fast-forward/workflows/Lint/badge.svg?branch=main" />
-  </a>
-  <a href="https://github.com/c4spar/deno-fast-forward/actions?query=workflow%3Aci">
-    <img alt="Test status" src="https://github.com/c4spar/deno-fast-forward/workflows/Test/badge.svg?branch=main" />
+  <a href="https://doc.deno.land/https/deno.land/x/fast_forward/mod.ts">
+    <img alt="doc" src="https://img.shields.io/badge/deno-doc-yellow?logo=deno" />
   </a>
   <a href="https://github.com/c4spar/deno-fast-forward/actions?query=workflow%3Aci">
     <img alt="Licence" src="https://img.shields.io/github/license/c4spar/deno-fast-forward?logo=github" />
   </a>
+  <a href="https://nest.land/package/fast_forward">
+    <img src="https://nest.land/badge.svg" alt="nest.land badge">
+  </a>
 </p>
+
+> ⚠️ Work In Progress! Expect breaking changes!
 
 ## Contents
 
