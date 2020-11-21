@@ -113,24 +113,24 @@ Deno.test({
 Deno.test({
   name: "ffmpeg multiplexing",
   async fn() {
-    const outputPath1_1 = `${rootDir}/.tmp/ffmpeg multiplexing 1.1.mp4`;
-    const outputPath1_2 = `${rootDir}/.tmp/ffmpeg multiplexing 1.2.mp4`;
-    const outputPath2_1 = `${rootDir}/.tmp/ffmpeg multiplexing 2.1.mp4`;
-    const outputPath2_2 = `${rootDir}/.tmp/ffmpeg multiplexing 2.2.mp4`;
+    const outputPath1 = `${rootDir}/.tmp/ffmpeg multiplexing 1.1.mp4`;
+    const outputPath2 = `${rootDir}/.tmp/ffmpeg multiplexing 1.2.mp4`;
+    const outputPath3 = `${rootDir}/.tmp/ffmpeg multiplexing 2.1.mp4`;
+    const outputPath4 = `${rootDir}/.tmp/ffmpeg multiplexing 2.2.mp4`;
 
     const encoder1 = new FFmpeg()
       .override(true)
       .width(200)
       .input(inputPath)
-      .output(outputPath1_1)
-      .output(outputPath1_2);
+      .output(outputPath1)
+      .output(outputPath2);
 
     const encoder2 = new FFmpeg()
       .override(true)
       .width(404)
       .input(inputPath)
-      .output(outputPath2_1)
-      .output(outputPath2_2);
+      .output(outputPath3)
+      .output(outputPath4);
 
     const iterator = new MuxAsyncIterator<EncodingProcess>();
     iterator.add(encoder1);
@@ -142,10 +142,10 @@ Deno.test({
       process.close();
     }
 
-    const outputFileExists1: boolean = await exists(outputPath1_1);
-    const outputFileExists2: boolean = await exists(outputPath1_2);
-    const outputFileExists3: boolean = await exists(outputPath2_1);
-    const outputFileExists4: boolean = await exists(outputPath2_2);
+    const outputFileExists1: boolean = await exists(outputPath1);
+    const outputFileExists2: boolean = await exists(outputPath2);
+    const outputFileExists3: boolean = await exists(outputPath3);
+    const outputFileExists4: boolean = await exists(outputPath4);
     assertEquals(outputFileExists1, true);
     assertEquals(outputFileExists2, true);
     assertEquals(outputFileExists3, true);

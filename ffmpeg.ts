@@ -63,7 +63,7 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
 
   get encoding(): Encoding | undefined {
     if (this.#encodingIndex === -1) {
-      return;
+      return undefined;
     }
     return this.#encodings[this.#encodingIndex];
   }
