@@ -71,7 +71,7 @@ export class EncodingEventStream
       };
     }
 
-    let event: EncodingEvent | null = await this.#pullEvent();
+    const event: EncodingEvent | null = await this.#pullEvent();
     if (!event) {
       return {
         done: true,
