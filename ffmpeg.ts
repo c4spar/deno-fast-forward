@@ -1,10 +1,5 @@
-import {
-  Encoding,
-  EncodingOptions,
-} from "./encoding.ts";
-import {
-  EncodingProcess,
-} from "./encoding_process.ts";
+import { Encoding, EncodingOptions } from "./encoding.ts";
+import { EncodingProcess } from "./encoding_process.ts";
 import type {
   EncodingEndEventListener,
   EncodingErrorEventListener,
