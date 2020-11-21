@@ -6,6 +6,8 @@ jobs:
   lint:
     name: Lint source
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
     steps:
       - name: Setup repo
         uses: actions/checkout@v2

@@ -1,6 +1,10 @@
 name: Test
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: 0 0 * * *
 
 jobs:
   test:
@@ -10,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        deno_version: [ v1.2.0, v1.4.2 ]
+        deno_version: [ v1.2.0, v1.x ]
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
