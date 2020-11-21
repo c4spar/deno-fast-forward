@@ -148,7 +148,7 @@ The second one is using an async iterator. You can use the encoding process as a
 ```typescript
 for await (const process: EndofingProcess of encoder) {
   process.run();
-  for await (const event of process) {
+  for await (const event: EncodingEvent of process) {
     switch(event.type) {
       case "start":
         console.log("start encoding of: %s", event.encoding.output);
