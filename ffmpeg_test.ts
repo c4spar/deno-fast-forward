@@ -1,3 +1,4 @@
+import { assertInstanceOf } from "./assertions.ts";
 import {
   assertEquals,
   dirname,
@@ -70,7 +71,7 @@ Deno.test({
     const outputPath2 = `${rootDir}/.tmp/ffmpeg multi encoding 2.webm`;
 
     const encoder = new FFmpeg();
-    assertEquals(encoder.encoding, undefined);
+    assertInstanceOf(encoder.encoding, Encoding);
     assertEquals(encoder.encodings.length, 0);
 
     encoder.override(true)
