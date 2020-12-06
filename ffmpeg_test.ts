@@ -1,4 +1,4 @@
-import { assertInstanceOf } from "./assertions.ts";
+import { assertInstanceOf } from "./_assertions.ts";
 import {
   assertEquals,
   dirname,

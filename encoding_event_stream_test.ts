@@ -1,3 +1,4 @@
+import { assertInstanceOf } from "./_assertions.ts";
 import { assertEquals, dirname, ensureDir, exists } from "./dev_deps.ts";
 import { Encoding } from "./encoding.ts";
 import { EncodingProcess } from "./encoding_process.ts";
@@ -58,10 +59,10 @@ Deno.test({
 
     const outputFileExists: boolean = await exists(outputPath);
     assertEquals(outputFileExists, true);
-    assertEquals(startEvent instanceof EncodingStartEvent, true);
-    assertEquals(infoEvent instanceof EncodingInfoEvent, true);
-    assertEquals(progressEvent instanceof EncodingProgressEvent, true);
-    assertEquals(endEvent instanceof EncodingEndEvent, true);
+    assertInstanceOf(startEvent, EncodingStartEvent);
+    assertInstanceOf(infoEvent, EncodingInfoEvent);
+    assertInstanceOf(progressEvent, EncodingProgressEvent);
+    assertInstanceOf(endEvent, EncodingEndEvent);
     assertEquals(errorEvent, undefined);
     assertEquals(progressEvent?.progress, 100);
 
@@ -70,10 +71,10 @@ Deno.test({
     assertEquals(status.success, true);
 
     const output = await encodingProcess.output();
-    assertEquals(output instanceof Uint8Array, true);
+    assertInstanceOf(output, Uint8Array);
 
     const errorOutput = await encodingProcess.stderrOutput();
-    assertEquals(errorOutput instanceof Uint8Array, true);
+    assertInstanceOf(errorOutput, Uint8Array);
 
     encodingProcess.close();
   },
@@ -127,26 +128,10 @@ Deno.test({
     assertEquals(outputFile1Exists, true, "Missing output file 1.");
     const outputFile2Exists: boolean = await exists(outputPath2);
     assertEquals(outputFile2Exists, true, "Missing output file 2.");
-    assertEquals(
-      startEvent instanceof EncodingStartEvent,
-      true,
-      "Invalid start event.",
-    );
-    assertEquals(
-      infoEvent instanceof EncodingInfoEvent,
-      true,
-      "Invalid info event.",
-    );
-    assertEquals(
-      progressEvent instanceof EncodingProgressEvent,
-      true,
-      "Invalid progress event.",
-    );
-    assertEquals(
-      endEvent instanceof EncodingEndEvent,
-      true,
-      "Invalid end event.",
-    );
+    assertInstanceOf(startEvent, EncodingStartEvent);
+    assertInstanceOf(infoEvent, EncodingInfoEvent);
+    assertInstanceOf(progressEvent, EncodingProgressEvent);
+    assertInstanceOf(endEvent, EncodingEndEvent);
     assertEquals(progressEvent?.progress, 100);
   },
 });

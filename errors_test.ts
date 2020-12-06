@@ -1,4 +1,4 @@
-import { assertExpectError, assertInstanceOf } from "./assertions.ts";
+import { assertExpectError, assertInstanceOf } from "./_assertions.ts";
 import { assertThrows, assertThrowsAsync, dirname } from "./dev_deps.ts";
 import { Encoding } from "./encoding.ts";
 import { EncodingEventStream } from "./encoding_event_stream.ts";

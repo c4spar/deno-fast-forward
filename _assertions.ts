@@ -1,12 +1,11 @@
-import { AssertionError, stripColor } from "./deps.ts";
+import { AssertionError, stripColor } from "./dev_deps.ts";
 
 interface Constructor {
   // deno-lint-ignore no-explicit-any
   new (...args: any[]): any;
 }
 
-// deno-lint-ignore no-explicit-any
-export function assertInstanceOf<T = any>(
+export function assertInstanceOf<T = unknown>(
   instance: T,
   expectedClass: Constructor,
   msg?: string,
@@ -22,8 +21,7 @@ export function assertInstanceOf<T = any>(
   );
 }
 
-// deno-lint-ignore no-explicit-any
-export function assertExpectError<T = any>(
+export function assertExpectError<T = unknown>(
   error: T,
   expectedErrorClass?: Constructor,
   msgIncludes = "",

@@ -1,5 +1,6 @@
 export {
   assertEquals,
+  AssertionError,
   assertNotEquals,
   assertThrows,
   assertThrowsAsync,
@@ -14,3 +15,5 @@ export { dirname } from "https://deno.land/std@0.78.0/path/mod.ts";
 export {
   MuxAsyncIterator,
 } from "https://deno.land/std@0.78.0/async/mux_async_iterator.ts";
+
+export { stripColor } from "https://deno.land/std@0.78.0/fmt/colors.ts";

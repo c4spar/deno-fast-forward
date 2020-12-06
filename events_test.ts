@@ -1,3 +1,4 @@
+import { assertInstanceOf } from "./_assertions.ts";
 import {
   assertEquals,
   assertNotEquals,
@@ -50,7 +51,7 @@ Deno.test({
 
     assertEquals(errorEvent, undefined);
 
-    assertEquals(startEvent instanceof EncodingStartEvent, true);
+    assertInstanceOf(startEvent, EncodingStartEvent);
     if (infoEvent instanceof EncodingInfoEvent) {
       assertNotEquals(infoEvent.info, undefined);
       assertNotEquals(infoEvent.info.format, undefined);
@@ -58,7 +59,7 @@ Deno.test({
       assertEquals(infoEvent.info.streams.length > 0, true);
     }
 
-    assertEquals(infoEvent instanceof EncodingInfoEvent, true);
+    assertInstanceOf(infoEvent, EncodingInfoEvent);
     if (infoEvent instanceof EncodingInfoEvent) {
       assertNotEquals(infoEvent.info, undefined);
       assertNotEquals(infoEvent.info.format, undefined);
@@ -66,7 +67,7 @@ Deno.test({
       assertEquals(infoEvent.info.streams.length > 0, true);
     }
 
-    assertEquals(endEvent instanceof EncodingEndEvent, true);
+    assertInstanceOf(endEvent, EncodingEndEvent);
     if (infoEvent instanceof EncodingInfoEvent) {
       assertNotEquals(infoEvent.info, undefined);
       assertNotEquals(infoEvent.info.format, undefined);
