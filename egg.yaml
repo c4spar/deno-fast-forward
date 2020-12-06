@@ -1,0 +1,16 @@
+name: fast_forward
+description: An easy to use ffmpeg module for Deno
+unstable: true
+version: 0.1.0
+repository: https://github.com/c4spar/deno-fast-forward
+files:
+  - examples
+  - fixtures
+  - "*.ts"
+  - CHANGELOG.md
+  - CONTRIBUTING.md
+  - LICENSE
+  - README.md
+ignore:
+  - _assertions.ts
+  - "*_test.ts"
