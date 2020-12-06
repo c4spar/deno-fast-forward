@@ -19,10 +19,10 @@ export interface FFmpegOutputOptions extends FFmpegBaseOptions {
 }
 
 /** output parameters */
-export class AbstractFFmpegOutputParameters
+export abstract class AbstractFFmpegOutputParameters
   extends FFmpegBaseParameters<FFmpegOutputOptions>
   implements FFmpegOutputOptions {
-  constructor(options: FFmpegOutputOptions = {}) {
+  protected constructor(options: FFmpegOutputOptions = {}) {
     super(options);
   }
 
@@ -121,17 +121,9 @@ export class AbstractFFmpegOutputParameters
   // set rotate(deg: number | undefined) {
   //   this.opts.rotate = deg;
   // }
-
-  clone(): FFmpegOutputParameters {
-    return new FFmpegOutputParameters().merge(this);
-  }
 }
 
 export class FFmpegOutputParameters extends AbstractFFmpegOutputParameters {
-  constructor(options?: FFmpegOutputOptions) {
-    super(options);
-  }
-
   get options(): FFmpegOutputOptions {
     return this.opts;
   }
@@ -149,4 +141,8 @@ export class FFmpegOutputParameters extends AbstractFFmpegOutputParameters {
   //     return this.opts;
   //   }
   // }
+
+  clone(): FFmpegOutputParameters {
+    return new FFmpegOutputParameters().merge(this);
+  }
 }
