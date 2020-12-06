@@ -1,3 +1,4 @@
+import { blue } from "./deps.ts";
 import type { Encoding } from "./encoding.ts";
 import { EncodingEventStream } from "./encoding_event_stream.ts";
 import {
@@ -30,7 +31,7 @@ export class EncodingProcess {
   #outputPromise?: Promise<Uint8Array>;
   #stderrOutputPromise?: Promise<Uint8Array>;
   #eventIterator: EncodingEventStream;
-  #cmd?: FFmpegCommand;
+  #cmd?: Array<string>;
 
   constructor(encoding: Encoding) {
     this.#encoding = encoding;
@@ -84,7 +85,7 @@ export class EncodingProcess {
     this.#cmd = new FFmpegCommand(
       this.#encoding,
       this.#isOutputStream(),
-    );
+    ).toArray();
     const opts: Deno.RunOptions = {
       cmd: this.#cmd,
       cwd: this.#encoding.cwd,
@@ -111,7 +112,7 @@ export class EncodingProcess {
       }
       throw error;
     }
-    this.#initEvents();
+    void this.#initEvents();
     return this;
   };
 

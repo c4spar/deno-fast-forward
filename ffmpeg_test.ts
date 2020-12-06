@@ -7,7 +7,7 @@ import {
   MuxAsyncIterator,
 } from "./dev_deps.ts";
 import { Encoding } from "./encoding.ts";
-import type { EncodingProcess } from "./encoding_process.ts";
+import { EncodingProcess } from "./encoding_process.ts";
 import { FFmpeg, ffmpeg } from "./ffmpeg.ts";
 
 const rootDir: string = dirname(import.meta.url).replace(/^file:\/\//, "");

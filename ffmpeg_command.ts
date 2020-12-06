@@ -1,135 +1,121 @@
-import type { Encoding } from "./encoding.ts";
+import { Encoding } from "./encoding.ts";
+import { FFmpegBaseOptions, FFmpegBaseParameters } from "./encoding_base_parameters.ts";
+import { FFmpegInputParameters } from "./encoding_input_parameters.ts";
+import { FFmpegOutputParameters } from "./encoding_output_parameters.ts";
 
-export class FFmpegCommand extends Array<string> {
+export class FFmpegCommand {
+  #args: Array<string> = [];
   constructor(encoding: Encoding, silent?: boolean) {
-    super();
-    this.#init(encoding, silent);
+    this.#setOptions(encoding, silent);
   }
 
-  #init = (encoding: Encoding, silent?: boolean) => {
-    this.push(
-      encoding.binary,
-      "-hide_banner",
-    );
+  toArray(): Array<string> {
+    return this.#args;
+  }
 
-    // if (!encoding.input) {
-    //   throw new Error("Missing input for encoding.");
-    // }
-
-    // Input options...
-
-    // if (encoding.input) {
-    this.push("-i", encoding.input);
-    // }
-
-    // Output options...
-
-    // this.push("-map_metadata", "0");
-    // this.push("-movflags", "use_metadata_tags");
-
-    this.push(encoding.override ? "-y" : "-n");
-
+  #setOptions = (encoding: Encoding, silent?: boolean) => {
+    this.#args.push(encoding.binary, "-hide_banner");
+    this.#setInputOptions(encoding.inputOptions);
+    this.#args.push("-i", encoding.input);
     if (!silent) {
-      this.push("-progress", "-", "-nostats");
+      !silent && this.#args.push("-progress", "-", "-nostats");
     }
-
     if (encoding.threads) {
-      this.push("-threads", encoding.threads.toString());
+      this.#args.push("-threads", encoding.threads.toString());
     }
+    if (encoding.logLevel) {
+      this.#args.push("-loglevel", encoding.logLevel);
+    }
+    this.#setOutputOptions(encoding.outputOptions);
+    if (encoding.output) {
+      this.#args.push(encoding.output);
+    }
+  };
 
-    if (encoding.format) {
-      this.push("-f", encoding.format);
-    }
+  #setInputOptions = (options: FFmpegInputParameters) => {
+    this.#setBaseOptions(options);
+  };
 
-    if (encoding.codec) {
-      this.push("-codec", encoding.codec);
-    }
-    if (encoding.audioCodec) {
-      this.push("-acodec", encoding.audioCodec);
-    }
-    if (encoding.videoCodec) {
-      this.push("-vcodec", encoding.videoCodec);
-    }
-
-    if (encoding.audioBitrate) {
-      let audioBitrate: string = encoding.audioBitrate.toString();
+  #setOutputOptions = (options: FFmpegOutputParameters) => {
+    // this.#args.push("-map_metadata", "0");
+    // this.#args.push("-movflags", "use_metadata_tags");
+    this.#args.push(options.override ? "-y" : "-n");
+    if (options.audioBitrate) {
+      let audioBitrate: string = options.audioBitrate.toString();
       if (!isNaN(Number(audioBitrate))) {
         audioBitrate += "k";
       }
-      this.push("-b:a", audioBitrate);
+      this.#args.push("-b:a", audioBitrate);
     }
-    if (encoding.videoBitrate) {
-      let videoBitrate: string = encoding.videoBitrate.toString();
+    if (options.videoBitrate) {
+      let videoBitrate: string = options.videoBitrate.toString();
       if (!isNaN(Number(videoBitrate))) {
         videoBitrate += "k";
       }
-      this.push("-b:v", videoBitrate);
+      this.#args.push("-b:v", videoBitrate);
     }
-    if (encoding.minVideoBitrate) {
-      this.push("-minrate", encoding.minVideoBitrate.toString());
+    if (options.minVideoBitrate) {
+      this.#args.push("-minrate", options.minVideoBitrate.toString());
     }
-    if (encoding.maxVideoBitrate) {
-      this.push("-maxrate", encoding.maxVideoBitrate.toString());
+    if (options.maxVideoBitrate) {
+      this.#args.push("-maxrate", options.maxVideoBitrate.toString());
     }
-    if (encoding.videoBufSize) {
-      this.push("-bufsize", encoding.videoBufSize.toString());
+    if (options.videoBufSize) {
+      this.#args.push("-bufsize", options.videoBufSize.toString());
     }
-
-    if (encoding.frameRate) {
-      this.push("-r", encoding.frameRate.toString());
+    if (options.frames) {
+      this.#args.push("-vframes", options.frames.toString());
     }
-
-    if (encoding.sampleRate) {
-      this.push("-ar", encoding.sampleRate.toString());
+    if (options.audioQuality) {
+      this.#args.push("-q:a", options.audioQuality.toString());
     }
-
-    if (encoding.frames) {
-      this.push("-vframes", encoding.frames.toString());
+    if (options.loop) {
+      this.#args.push("-loop", options.loop.toString());
     }
-
-    if (encoding.audioQuality) {
-      this.push("-q:a", encoding.audioQuality.toString());
+    if (options.width || options.height) {
+      const width: string | number = options.width ?? -1;
+      const height: string | number = options.height ?? -1;
+      this.#args.push("-vf", `scale=${width}:${height}`);
     }
-
-    if (encoding.audioChannels) {
-      this.push("-ac", encoding.audioChannels.toString());
-    }
-
-    if (encoding.duration) {
-      this.push("-t", encoding.duration.toString());
-    }
-
-    if (encoding.loop) {
-      this.push("-loop", encoding.loop.toString());
-    }
-
-    if (encoding.noAudio) {
-      this.push("-an");
-    }
-    if (encoding.noVideo) {
-      this.push("-vn");
-    }
-
-    if (encoding.width || encoding.height) {
-      const width: string | number = encoding.width ?? -1;
-      const height: string | number = encoding.height ?? -1;
-      this.push("-vf", `scale=${width}:${height}`);
-    }
-
-    // if (encoding.rotate) {
-    //   this.push("-metadata:s:v", `rotate=${encoding.rotate.toString()}`);
+    // if (options.rotate) {
+    //   this.#args.push("-metadata:s:v", `rotate=${options.rotate.toString()}`);
     // }
+    this.#setBaseOptions(options);
+  };
 
-    if (encoding.logLevel) {
-      this.push("-loglevel", encoding.logLevel);
+  #setBaseOptions = (options: FFmpegBaseParameters<FFmpegBaseOptions>) => {
+    if (options.audioChannels) {
+      this.#args.push("-ac", options.audioChannels.toString());
     }
-
-    if (encoding.args) {
-      this.push(...encoding.args);
+    if (options.audioCodec) {
+      this.#args.push("-acodec", options.audioCodec);
     }
-
-    if (encoding.output) {
-      this.push(encoding.output);
+    if (options.codec) {
+      this.#args.push("-codec", options.codec);
+    }
+    if (options.duration) {
+      this.#args.push("-t", options.duration.toString());
+    }
+    if (options.format) {
+      this.#args.push("-f", options.format);
+    }
+    if (options.frameRate) {
+      this.#args.push("-r", options.frameRate.toString());
+    }
+    if (options.noAudio) {
+      this.#args.push("-an");
+    }
+    if (options.noVideo) {
+      this.#args.push("-vn");
+    }
+    if (options.sampleRate) {
+      this.#args.push("-ar", options.sampleRate.toString());
+    }
+    if (options.videoCodec) {
+      this.#args.push("-vcodec", options.videoCodec);
+    }
+    if (options.args) {
+      this.#args.push(...options.args);
     }
   };
 }
