@@ -74,8 +74,7 @@ Deno.test({
 Deno.test({
   name: "ffmpeg command failed error",
   async fn() {
-    const outputPath =
-      `${rootDir}/.tmp/ffmpeg command failed error.mp4`;
+    const outputPath = `${rootDir}/.tmp/ffmpeg command failed error.mp4`;
 
     const encoder = ffmpeg(inputPath)
       .output(outputPath)
