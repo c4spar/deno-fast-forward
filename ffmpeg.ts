@@ -18,47 +18,14 @@ export function ffmpeg(
 }
 
 export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
-  // implements AsyncIterableIterator<EncodingProcess>, PromiseLike<never> {
   #global: Encoding = new Encoding();
   #encodings: Encoding[] = [];
   #encodingIndex = -1;
   #iteratorCount = 0;
 
-  // #thenPromise: Promise<void> | undefined;
-
-  constructor(input?: string, options: EncodingOptions | string = {}) {
-    if (input) {
-      this.#global.input = input;
-    }
-    if (typeof options === "string") {
-      this.#global.output = options;
-    }
-    Object.assign(this.#global, options);
-  }
-
-  [Symbol.asyncIterator](): AsyncIterableIterator<EncodingProcess> {
-    return this;
-  }
-
-  // then(
-  //   resolve?: (() => never | PromiseLike<never>),
-  //   reject?: ((error: unknown) => never | PromiseLike<never>),
-  // ): PromiseLike<never> {
-  //   if (!this.#thenPromise) {
-  //     this.#thenPromise = this.encode();
-  //   }
-  //   if (resolve) {
-  //     this.#thenPromise.then(resolve);
-  //   }
-  //   if (reject) {
-  //     this.#thenPromise.catch(reject);
-  //   }
-  //   return this;
-  // }
-
-  get encoding(): Encoding | undefined {
+  get encoding(): Encoding {
     if (this.#encodingIndex === -1) {
-      return undefined;
+      return this.#global;
     }
     return this.#encodings[this.#encodingIndex];
   }
@@ -67,114 +34,96 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     return this.#encodings;
   }
 
-  output(path: string): this {
-    this.#addEncoding();
-    this.#set("output", path);
+  constructor(input?: string, options: EncodingOptions | string = {}) {
+    if (input) {
+      this.encoding.input = input;
+    }
+    if (typeof options === "string") {
+      this.encoding.output = options;
+    }
+    Object.assign(this.encoding, options);
+  }
+
+  [Symbol.asyncIterator](): AsyncIterableIterator<EncodingProcess> {
     return this;
   }
+
+  /**************************************************
+   *** Encoding Options: ****************************
+   *************************************************/
 
   input(source: string): this {
-    this.#set("input", source);
+    this.encoding.input = source;
     return this;
   }
 
-  cwd(path: string): this {
-    this.#set("cwd", path);
-    return this;
-  }
-
-  threads(count: number): this {
-    this.#set("threads", count);
+  output(target: string): this {
+    this.#addEncoding();
+    this.encoding.output = target;
     return this;
   }
 
   binary(ffmpeg: string): this {
-    this.#set("binary", ffmpeg);
+    this.encoding.binary = ffmpeg;
     return this;
   }
 
-  override(enable: boolean): this {
-    this.#set("override", enable);
+  cwd(path: string): this {
+    this.encoding.cwd = path;
     return this;
   }
 
-  format(format: string): this {
-    this.#set("format", format);
+  threads(count: number): this {
+    this.encoding.threads = count;
     return this;
   }
 
-  codec(codec: string): this {
-    this.#set("codec", codec);
+  logLevel(logLevel: string): this {
+    this.encoding.logLevel = logLevel;
     return this;
   }
 
-  audioCodec(codec: string): this {
-    this.#set("audioCodec", codec);
+  /**************************************************
+   *** Input / Output Options: **********************
+   **************************************************/
+
+  args(ffmpegArgs: string[]): this {
+    this.encoding.args = ffmpegArgs;
     return this;
   }
 
-  videoCodec(codec: string): this {
-    this.#set("videoCodec", codec);
-    return this;
-  }
-
-  audioBitrate(bitrate: number | string): this {
-    this.#set("audioBitrate", bitrate);
-    return this;
-  }
-
-  videoBitrate(bitrate: number | string): this {
-    this.#set("videoBitrate", bitrate);
-    return this;
-  }
-
-  minVideoBitrate(bitrate: number | string): this {
-    this.#set("minVideoBitrate", bitrate);
-    return this;
-  }
-
-  maxVideoBitrate(codec: number | string): this {
-    this.#set("maxVideoBitrate", codec);
-    return this;
-  }
-
-  videoBufSize(size: number | string): this {
-    this.#set("videoBufSize", size);
-    return this;
-  }
-
-  width(width: number | string): this {
-    this.#set("width", width);
-    return this;
-  }
-
-  height(height: number | string): this {
-    this.#set("height", height);
-    return this;
-  }
-
-  frameRate(frameRate: number): this {
-    this.#set("frameRate", frameRate);
-    return this;
-  }
-
-  sampleRate(hz: number): this {
-    this.#set("sampleRate", hz);
-    return this;
-  }
-
-  frames(frames: number): this {
-    this.#set("frames", frames);
-    return this;
-  }
-
-  audioQuality(quality: number): this {
-    this.#set("audioQuality", quality);
+  inputArgs(ffmpegArgs: string[]): this {
+    this.encoding.inputOptions.args = ffmpegArgs;
     return this;
   }
 
   audioChannels(count: number): this {
-    this.#set("audioChannels", count);
+    this.encoding.audioChannels = count;
+    return this;
+  }
+
+  inputAudioChannels(count: number): this {
+    this.encoding.inputOptions.audioChannels = count;
+    return this;
+  }
+
+  audioCodec(codec: string): this {
+    this.encoding.audioCodec = codec;
+    return this;
+  }
+
+  inputAudioCodec(codec: string): this {
+    this.encoding.inputOptions.audioCodec = codec;
+    return this;
+  }
+
+  codec(codec: string): this {
+    this.encoding.codec = codec;
+    return this;
+  }
+
+  inputCodec(codec: string): this {
+    this.encoding.inputOptions.codec = codec;
     return this;
   }
 
@@ -182,39 +131,148 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
    * https://ffmpeg.org/ffmpeg-utils.html#time-duration-syntax
    */
   duration(duration: string | number): this {
-    this.#set("duration", duration);
+    this.encoding.duration = duration;
     return this;
   }
 
-  loop(duration: string | number): this {
-    this.#set("loop", duration);
+  inputDuration(duration: string | number): this {
+    this.encoding.inputOptions.duration = duration;
     return this;
   }
 
-  // rotate(deg: number): this {
-  //   this.#set("rotate", deg);
-  //   return this;
-  // }
+  format(format: string): this {
+    this.encoding.format = format;
+    return this;
+  }
+
+  inputFormat(format: string): this {
+    this.encoding.inputOptions.format = format;
+    return this;
+  }
+
+  frameRate(frameRate: number): this {
+    this.encoding.frameRate = frameRate;
+    return this;
+  }
+
+  inputFrameRate(frameRate: number): this {
+    this.encoding.inputOptions.frameRate = frameRate;
+    return this;
+  }
 
   noAudio(disable = true): this {
-    this.#set("noAudio", disable);
+    this.encoding.noAudio = disable;
+    return this;
+  }
+
+  noInputAudio(disable = true): this {
+    this.encoding.inputOptions.noAudio = disable;
     return this;
   }
 
   noVideo(disable = true): this {
-    this.#set("noVideo", disable);
+    this.encoding.noVideo = disable;
     return this;
   }
 
-  logLevel(logLevel: string): this {
-    this.#set("logLevel", logLevel);
+  noInputVideo(disable = true): this {
+    this.encoding.inputOptions.noVideo = disable;
     return this;
   }
 
-  args(ffmpegArgs: string[]): this {
-    this.#set("args", ffmpegArgs);
+  sampleRate(hz: number): this {
+    this.encoding.sampleRate = hz;
     return this;
   }
+
+  inputSampleRate(hz: number): this {
+    this.encoding.inputOptions.sampleRate = hz;
+    return this;
+  }
+
+  videoCodec(codec: string): this {
+    this.encoding.videoCodec = codec;
+    return this;
+  }
+
+  inputVideoCodec(codec: string): this {
+    this.encoding.inputOptions.videoCodec = codec;
+    return this;
+  }
+
+  /**************************************************
+   *** Input Only Options: **************************
+   **************************************************/
+
+  // ...
+
+  /**************************************************
+   *** Output Only Options: *************************
+   **************************************************/
+
+  audioBitrate(bitrate: number | string): this {
+    this.encoding.audioBitrate = bitrate;
+    return this;
+  }
+
+  audioQuality(quality: number): this {
+    this.encoding.audioQuality = quality;
+    return this;
+  }
+
+  frames(frames: number): this {
+    this.encoding.frames = frames;
+    return this;
+  }
+
+  height(height: number | string): this {
+    this.encoding.height = height;
+    return this;
+  }
+
+  loop(loops: string | number): this {
+    this.encoding.loop = loops;
+    return this;
+  }
+
+  maxVideoBitrate(bitrate: number | string): this {
+    this.encoding.maxVideoBitrate = bitrate;
+    return this;
+  }
+
+  minVideoBitrate(bitrate: number | string): this {
+    this.encoding.minVideoBitrate = bitrate;
+    return this;
+  }
+
+  override(enable: boolean): this {
+    this.encoding.override = enable;
+    return this;
+  }
+
+  // rotate(deg: number): this {
+  //   this.encoding.output.rotate = deg;
+  //   return this;
+  // }
+
+  videoBitrate(bitrate: number | string): this {
+    this.encoding.videoBitrate = bitrate;
+    return this;
+  }
+
+  videoBufSize(size: number | string): this {
+    this.encoding.videoBufSize = size;
+    return this;
+  }
+
+  width(width: number | string): this {
+    this.encoding.width = width;
+    return this;
+  }
+
+  /**************************************************
+   *** Methods: *************************************
+   **************************************************/
 
   addEventListener(
     event: "info",
@@ -240,9 +298,8 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     event: EncodingEventType,
     listener: EncodingEventListener,
   ): this {
-    const encoding = this.encoding ?? this.#global;
     // deno-lint-ignore no-explicit-any
-    encoding.addEventListener(event as any, listener as any);
+    this.encoding.addEventListener(event as any, listener as any);
     return this;
   }
 
@@ -259,30 +316,22 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     }
   }
 
-  async next(): Promise<IteratorResult<EncodingProcess, null>> {
+  next(): Promise<IteratorResult<EncodingProcess, null>> {
     if (this.#iteratorCount < this.#encodings.length) {
-      return {
-        value: new EncodingProcess(this.#encodings[this.#iteratorCount++]),
+      const encoding: Encoding = this.#encodings[this.#iteratorCount++];
+      return Promise.resolve({
+        value: new EncodingProcess(encoding),
         done: false,
-      };
+      });
     }
-    return {
+    return Promise.resolve({
       done: true,
       value: null,
-    };
+    });
   }
 
   #addEncoding = (): void => {
     this.#encodings.push(this.#global.clone());
     this.#encodingIndex = this.#encodings.length - 1;
-  };
-
-  #set = <K extends keyof EncodingOptions>(
-    name: K,
-    value: EncodingOptions[K],
-  ): this => {
-    const encoding: EncodingOptions = this.encoding ?? this.#global;
-    encoding[name] = value;
-    return this;
   };
 }

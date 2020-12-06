@@ -1,3 +1,4 @@
+import { blue } from "./deps.ts";
 import type { Encoding } from "./encoding.ts";
 import { EncodingEventStream } from "./encoding_event_stream.ts";
 import {
@@ -30,7 +31,7 @@ export class EncodingProcess {
   #outputPromise?: Promise<Uint8Array>;
   #stderrOutputPromise?: Promise<Uint8Array>;
   #eventIterator: EncodingEventStream;
-  #cmd?: FFmpegCommand;
+  #cmd?: Array<string>;
 
   constructor(encoding: Encoding) {
     this.#encoding = encoding;
@@ -84,7 +85,7 @@ export class EncodingProcess {
     this.#cmd = new FFmpegCommand(
       this.#encoding,
       this.#isOutputStream(),
-    );
+    ).toArray();
     const opts: Deno.RunOptions = {
       cmd: this.#cmd,
       cwd: this.#encoding.cwd,
@@ -111,11 +112,11 @@ export class EncodingProcess {
       }
       throw error;
     }
-    this.#initEvents();
+    void this.#initEvents();
     return this;
   };
 
-  status = async (): Promise<EncodingStatus> => {
+  status = (): Promise<EncodingStatus> => {
     if (!this.#statusPromise) {
       this.#statusPromise = new Promise((resolve, reject) => {
         try {
@@ -130,7 +131,7 @@ export class EncodingProcess {
     return this.#statusPromise;
   };
 
-  output = async (): Promise<Uint8Array> => {
+  output = (): Promise<Uint8Array> => {
     if (!this.#outputPromise) {
       this.#outputPromise = new Promise((resolve, reject) => {
         try {
@@ -145,7 +146,7 @@ export class EncodingProcess {
     return this.#outputPromise;
   };
 
-  stderrOutput = async (): Promise<Uint8Array> => {
+  stderrOutput = (): Promise<Uint8Array> => {
     if (!this.#stderrOutputPromise) {
       this.#stderrOutputPromise = new Promise((resolve, reject) => {
         try {

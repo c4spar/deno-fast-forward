@@ -1,3 +1,4 @@
+import { assertInstanceOf } from "./assertions.ts";
 import {
   assertEquals,
   dirname,
@@ -6,7 +7,7 @@ import {
   MuxAsyncIterator,
 } from "./dev_deps.ts";
 import { Encoding } from "./encoding.ts";
-import type { EncodingProcess } from "./encoding_process.ts";
+import { EncodingProcess } from "./encoding_process.ts";
 import { FFmpeg, ffmpeg } from "./ffmpeg.ts";
 
 const rootDir: string = dirname(import.meta.url).replace(/^file:\/\//, "");
@@ -70,7 +71,7 @@ Deno.test({
     const outputPath2 = `${rootDir}/.tmp/ffmpeg multi encoding 2.webm`;
 
     const encoder = new FFmpeg();
-    assertEquals(encoder.encoding, undefined);
+    assertInstanceOf(encoder.encoding, Encoding);
     assertEquals(encoder.encodings.length, 0);
 
     encoder.override(true)

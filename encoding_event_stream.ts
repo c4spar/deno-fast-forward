@@ -4,7 +4,7 @@ import {
   EncodingEventStreamAlreadyDisposed,
   EncodingProcessNotStarted,
 } from "./errors.ts";
-import type { EncodingErrorEvent, EncodingEvent } from "./events.ts";
+import type { EncodingEvent } from "./events.ts";
 
 type Resolver<T> = (value?: T | PromiseLike<T>) => void;
 type Reject = (error: Error) => void;
