@@ -1,5 +1,8 @@
 import { Encoding } from "./encoding.ts";
-import { FFmpegBaseOptions, FFmpegBaseParameters } from "./encoding_base_parameters.ts";
+import {
+  FFmpegBaseOptions,
+  FFmpegBaseParameters,
+} from "./encoding_base_parameters.ts";
 import { FFmpegInputParameters } from "./encoding_input_parameters.ts";
 import { FFmpegOutputParameters } from "./encoding_output_parameters.ts";
 
