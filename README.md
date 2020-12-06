@@ -391,4 +391,4 @@ Any kind of contribution is welcome! Please take a look at the [contributing gui
 
 ## License
 
-[MIT](../LICENSE)
+[MIT](./LICENSE)
