@@ -4,16 +4,16 @@ export {
   assertNotEquals,
   assertThrows,
   assertThrowsAsync,
-} from "https://deno.land/std@0.78.0/testing/asserts.ts";
+} from "https://deno.land/std@0.79.0/testing/asserts.ts";
 
-export { exists } from "https://deno.land/std@0.78.0/fs/exists.ts";
+export { exists } from "https://deno.land/std@0.79.0/fs/exists.ts";
 
-export { ensureDir } from "https://deno.land/std@0.78.0/fs/ensure_dir.ts";
+export { ensureDir } from "https://deno.land/std@0.79.0/fs/ensure_dir.ts";
 
-export { dirname } from "https://deno.land/std@0.78.0/path/mod.ts";
+export { dirname } from "https://deno.land/std@0.79.0/path/mod.ts";
 
 export {
   MuxAsyncIterator,
-} from "https://deno.land/std@0.78.0/async/mux_async_iterator.ts";
+} from "https://deno.land/std@0.79.0/async/mux_async_iterator.ts";
 
-export { stripColor } from "https://deno.land/std@0.78.0/fmt/colors.ts";
+export { stripColor } from "https://deno.land/std@0.79.0/fmt/colors.ts";
