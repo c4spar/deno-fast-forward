@@ -316,18 +316,18 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     }
   }
 
-  async next(): Promise<IteratorResult<EncodingProcess, null>> {
+  next(): Promise<IteratorResult<EncodingProcess, null>> {
     if (this.#iteratorCount < this.#encodings.length) {
       const encoding: Encoding = this.#encodings[this.#iteratorCount++];
-      return {
+      return Promise.resolve({
         value: new EncodingProcess(encoding),
         done: false,
-      };
+      });
     }
-    return {
+    return Promise.resolve({
       done: true,
       value: null,
-    };
+    });
   }
 
   #addEncoding = (): void => {

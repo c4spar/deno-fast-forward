@@ -4,7 +4,7 @@ import { FFmpegCommand } from "./ffmpeg_command.ts";
 
 Deno.test({
   name: "ffmpeg command default options",
-  async fn() {
+  fn() {
     const cmd: Array<string> = new FFmpegCommand(new Encoding()).toArray();
     assertEquals(cmd, [
       "ffmpeg",
@@ -22,7 +22,7 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg command options",
-  async fn() {
+  fn() {
     const encoding = new Encoding();
     encoding.input = "input.mp4";
     encoding.output = "output.mp4";

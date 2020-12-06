@@ -53,7 +53,7 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg binary not found error",
-  async fn() {
+  fn() {
     const encoding = new Encoding();
     encoding.binary = "fffprobe";
     const process = new EncodingProcess(encoding);
@@ -63,7 +63,7 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg binary permission denied error",
-  async fn() {
+  fn() {
     const encoding = new Encoding();
     encoding.binary = new URL(import.meta.url).pathname;
     const process = new EncodingProcess(encoding);
@@ -74,7 +74,7 @@ Deno.test({
 Deno.test({
   name: "ffmpeg command failed error",
   async fn() {
-    const outputPath: string =
+    const outputPath =
       `${rootDir}/.tmp/ffmpeg command failed error.mp4`;
 
     const encoder = ffmpeg(inputPath)
@@ -114,7 +114,7 @@ Deno.test({
 Deno.test({
   name: "encoding process already started error",
   async fn() {
-    const outputPath: string =
+    const outputPath =
       `${rootDir}/.tmp/encoding process already started error.mp4`;
     const encoding = new Encoding();
     encoding.input = inputPath;
@@ -133,7 +133,7 @@ Deno.test({
 
 Deno.test({
   name: "encoding event stream already disposed error",
-  async fn() {
+  fn() {
     const eventStream = new EncodingEventStream(
       new EncodingProcess(
         new Encoding(),

@@ -116,7 +116,7 @@ export class EncodingProcess {
     return this;
   };
 
-  status = async (): Promise<EncodingStatus> => {
+  status = (): Promise<EncodingStatus> => {
     if (!this.#statusPromise) {
       this.#statusPromise = new Promise((resolve, reject) => {
         try {
@@ -131,7 +131,7 @@ export class EncodingProcess {
     return this.#statusPromise;
   };
 
-  output = async (): Promise<Uint8Array> => {
+  output = (): Promise<Uint8Array> => {
     if (!this.#outputPromise) {
       this.#outputPromise = new Promise((resolve, reject) => {
         try {
@@ -146,7 +146,7 @@ export class EncodingProcess {
     return this.#outputPromise;
   };
 
-  stderrOutput = async (): Promise<Uint8Array> => {
+  stderrOutput = (): Promise<Uint8Array> => {
     if (!this.#stderrOutputPromise) {
       this.#stderrOutputPromise = new Promise((resolve, reject) => {
         try {
