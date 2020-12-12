@@ -6,7 +6,7 @@ import {
 } from "./errors.ts";
 import type { EncodingEvent } from "./events.ts";
 
-type Resolver<T> = (value?: T | PromiseLike<T>) => void;
+type Resolver<T> = (value: T | PromiseLike<T>) => void;
 type Reject = (error: Error) => void;
 
 interface PullQueueItem {
@@ -99,7 +99,7 @@ export class EncodingEventStream
   };
 
   #pullEvent = (): Promise<EncodingEvent | null> => {
-    return new Promise(
+    return new Promise<EncodingEvent | null>(
       (resolve: Resolver<EncodingEvent | null>, reject: Reject) => {
         if (this.#pushQueue.length > 0) {
           const event: EncodingEvent | null = this.#pushQueue[0];
