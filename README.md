@@ -40,7 +40,8 @@
 
 ## Installation
 
-This is a Deno module and can be imported directly from the repo and from following registries.
+This is a Deno module and can be imported directly from the repo and from
+following registries.
 
 [Deno Registry](https://deno.land/x/fast_forward)
 
@@ -64,23 +65,20 @@ import { ffmpeg } from "https://raw.githubusercontent.com/c4spar/deno-fast-forwa
 
 ```typescript
 await ffmpeg("https://www.w3schools.com/html/mov_bbb.mp4")
-
   // Global encoding options (applied to all outputs).
   .audioBitrate("192k")
   .videoBitrate("1M")
   .width(480)
   .height(640)
-
   // Ouput 1.
   .output("output.mp4")
   .audioCodec("aac")
   .videoCodec("libx264")
-
   // Ouput 2.
   .output("output.webm")
   .audioCodec("libvorbis")
   .videoCodec("libvpx-vp9")
-
+  // Start encoding.
   .encode();
 
 console.log("All encodings done!");
@@ -100,41 +98,54 @@ const encoder = ffmpeg("https://www.w3schools.com/html/mov_bbb.mp4");
 const encoder = new FFmpeg("https://www.w3schools.com/html/mov_bbb.mp4");
 ```
 
-Then you can define global options and events which will be applied to all defined outputs.
+Then you can define global options and events which will be applied to all
+defined outputs.
 
 ```typescript
 encoder
   .audioBitrate("192k")
   .videoBitrate("1M")
-  .addEventListener("progress", (event) => console.log("Progress: %s", event.progress))
+  .addEventListener(
+    "progress",
+    (event) => console.log("Progress: %s", event.progress),
+  )
   .addEventListener("error", (event) => console.log(event.error));
 ```
 
-The `.output()` method add's a new encoding object which inherits all global options and events. Multiple outputs can be added with additional options for each output.
+The `.output()` method add's a new encoding object which inherits all global
+options and events. Multiple outputs can be added with additional options for
+each output.
 
 ```typescript
 encoder
   .output("output-x264.mp4")
   .videoCodec("libx264")
   .output("output-x265.mp4")
-  .videoCodec("libx265")
+  .videoCodec("libx265");
 ```
 
-To start the encoding just call the `.encode()` method and await the returned promise.
+To start the encoding just call the `.encode()` method and await the returned
+promise.
 
 ```typescript
 await encoder.encode();
 ```
 
-To get more control over the encoding precesses you can use the encoder instance as async iterator to iterate over all encoding processes with a `for await` loop. The process instance is an wrapper around the deno process and has almost the same methods and properties. The encoding process can be started with the `.run()` method and must be closed with the `.close()` method after the process is finished or has failed.
+To get more control over the encoding precesses you can use the encoder instance
+as async iterator to iterate over all encoding processes with a `for await`
+loop. The process instance is an wrapper around the deno process and has almost
+the same methods and properties. The encoding process can be started with the
+`.run()` method and must be closed with the `.close()` method after the process
+is finished or has failed.
 
-There are to different ways to await the status. The first one is using the `.status()` method, same like with the deno process.
+There are to different ways to await the status. The first one is using the
+`.status()` method, same like with the deno process.
 
 ```typescript
 for await (const process: EndofingProcess of encoder) {
   process.run();
   const status: EncodingStatus = await process.status();
-  if(!status.success) {
+  if (!status.success) {
     process.close();
     throw new Error("Encoding failed.");
   }
@@ -143,13 +154,16 @@ for await (const process: EndofingProcess of encoder) {
 console.log("All encodings done!");
 ```
 
-The second one is using an async iterator. You can use the encoding process as async iterator to iterate over all encoding events. If no error occurs then the status is success, if the status is not success or any encoding error occurs an error event is emitted.
+The second one is using an async iterator. You can use the encoding process as
+async iterator to iterate over all encoding events. If no error occurs then the
+status is success, if the status is not success or any encoding error occurs an
+error event is emitted.
 
 ```typescript
 for await (const process: EndofingProcess of encoder) {
   process.run();
   for await (const event: EncodingEvent of process) {
-    switch(event.type) {
+    switch (event.type) {
       case "start":
         console.log("start encoding of: %s", event.encoding.output);
         return;
@@ -157,7 +171,11 @@ for await (const process: EndofingProcess of encoder) {
         console.log("Media info loaded: %o", event.info);
         return;
       case "progress":
-        console.log("Encoding progress of: %s - %n%", event.encoding.output, event.progress);
+        console.log(
+          "Encoding progress of: %s - %n%",
+          event.encoding.output,
+          event.progress,
+        );
         return;
       case "end":
         console.log("Encoding of %s done!", event.encoding.output);
@@ -165,7 +183,7 @@ for await (const process: EndofingProcess of encoder) {
       case "error":
         process.close();
         throw event.error;
-      }
+    }
   }
   process.close();
 }
@@ -316,7 +334,7 @@ $ deno run --allow-read --allow-write --allow-run https://deno.land/x/fast_forwa
 ### Options
 
 - [x] output
-    - [x] support multiple outputs
+  - [x] support multiple outputs
 - [x] input
   - [ ] support multiple inputs
 - [x] cwd
@@ -384,10 +402,10 @@ $ deno run --allow-read --allow-write --allow-run https://deno.land/x/fast_forwa
 - [x] error
 - [ ] stderr (ffmpeg output)
 
-
 ## Contributing
 
-Any kind of contribution is welcome! Please take a look at the [contributing guidelines](../CONTRIBUTING.md).
+Any kind of contribution is welcome! Please take a look at the
+[contributing guidelines](../CONTRIBUTING.md).
 
 ## License
 
