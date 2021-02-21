@@ -1,3 +1,5 @@
+// deno-lint-ignore-file camelcase
+
 export interface MediaInfo {
   streams: MediaStream[];
   format: MediaFormat;

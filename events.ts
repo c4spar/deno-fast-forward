@@ -102,12 +102,18 @@ export class EncodingProgressEvent extends AbstractEncodingEvent<"progress"> {
 export interface ProgressInfo {
   frame: string;
   fps: string;
+  // deno-lint-ignore camelcase
   stream_0_0_q: string;
   bitrate: string;
+  // deno-lint-ignore camelcase
   total_size: string;
+  // deno-lint-ignore camelcase
   out_time_ms: string;
+  // deno-lint-ignore camelcase
   out_time: string;
+  // deno-lint-ignore camelcase
   dup_frames: string;
+  // deno-lint-ignore camelcase
   drop_frames: string;
   speed: string;
   progress: "continue" | "end";
