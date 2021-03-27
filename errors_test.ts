@@ -1,5 +1,10 @@
 import { assertExpectError, assertInstanceOf } from "./_assertions.ts";
-import { assertThrows, assertThrowsAsync, dirname } from "./dev_deps.ts";
+import {
+  assertThrows,
+  assertThrowsAsync,
+  dirname,
+  fromFileUrl,
+} from "./dev_deps.ts";
 import { Encoding } from "./encoding.ts";
 import { EncodingEventStream } from "./encoding_event_stream.ts";
 import { EncodingProcess } from "./encoding_process.ts";
@@ -18,7 +23,7 @@ import { EncodingErrorEvent } from "./events.ts";
 import { ffmpeg } from "./ffmpeg.ts";
 import { ffprobe } from "./ffprobe.ts";
 
-const rootDir: string = dirname(import.meta.url).replace(/^file:\/\//, "");
+const rootDir: string = dirname(fromFileUrl(import.meta.url));
 const inputPath = `${rootDir}/fixtures/sample.mp4`;
 
 Deno.test({
@@ -35,7 +40,7 @@ Deno.test({
   name: "ffprobe binary permission denied error",
   async fn() {
     await assertThrowsAsync(
-      () => ffprobe(inputPath, { binary: new URL(import.meta.url).pathname }),
+      () => ffprobe(inputPath, { binary: rootDir }),
       FFprobeBinaryPermissionDenied,
     );
   },
@@ -65,7 +70,7 @@ Deno.test({
   name: "ffmpeg binary permission denied error",
   fn() {
     const encoding = new Encoding();
-    encoding.binary = new URL(import.meta.url).pathname;
+    encoding.binary = rootDir;
     const process = new EncodingProcess(encoding);
     assertThrows(() => process.run(), FFmpegBinaryPermissionDenied);
   },
