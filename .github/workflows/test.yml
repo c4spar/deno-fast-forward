@@ -26,6 +26,8 @@ jobs:
 
       - name: Setup FFmpeg
         uses: FedericoCarboni/setup-ffmpeg@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check FFmpeg
         run: ffmpeg -version && ffprobe -version
