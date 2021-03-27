@@ -38,7 +38,7 @@ jobs:
 
       - name: Run tests
         if: ${{ matrix.deno == 'v1.x' }}
-        run: deno test --allow-read --allow-run --allow-write --coverage=./cov
+        run: deno test --unstable --allow-read --allow-run --allow-write --coverage=./cov
 
       - name: Generate lcov
         if: ${{ matrix.deno == 'v1.x' }}
