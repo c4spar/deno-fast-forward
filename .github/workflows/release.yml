@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v2
+
+      - name: Setup Deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: v1.x
+
+      - name: Setup eggs
+        run: >
+          deno install --unstable --allow-all https://x.nest.land/eggs@0.3.5/eggs.ts &&
+          eggs link "${NEST_TOKEN}"
+        env:
+          NEST_TOKEN: ${{ secrets.NEST_TOKEN }}
+
+      - name: Publish Nest.land
+        run: eggs publish --no-check --yes
