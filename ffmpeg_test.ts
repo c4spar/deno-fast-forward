@@ -178,8 +178,8 @@ Deno.test({
       .videoCodec("libx264")
       .width(200)
       .height(-1)
-      .frameRate(24)
-      .sampleRate(44100)
+      // .frameRate(24)
+      // .sampleRate(44100)
       .frames(100)
       .audioQuality(2)
       .audioChannels(2)
@@ -199,14 +199,12 @@ Deno.test({
     const outputFileExists: boolean = await exists(outputPath);
     assertEquals(outputFileExists, true);
 
-    const encoding: Encoding | undefined = encoder.encoding;
+    assertEquals(encoder.encoding instanceof Encoding, true);
 
-    assertEquals(encoding instanceof Encoding, true);
-
-    if (encoding) {
+    if (encoder.encoding) {
       // assertEquals(encoding.width, 200);
-      assertEquals(encoding.input, inputPath);
-      assertEquals(encoding.output, outputPath);
+      assertEquals(encoder.encoding.input, inputPath);
+      assertEquals(encoder.encoding.output, outputPath);
     }
   },
 });

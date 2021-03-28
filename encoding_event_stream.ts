@@ -63,7 +63,6 @@ export class EncodingEventStream
       });
     }
     if (this.#done) {
-      await this.#encodingProcess.status();
       this.dispose();
       return {
         done: true,

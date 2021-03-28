@@ -85,14 +85,6 @@ export class FFmpegCommandFailed extends FFmpegError {
   }
 }
 
-export class FFmpegCommandStatusFailed extends FFmpegError {
-  constructor(options: FFmpegErrorOptions) {
-    super("Failed to retrieve ffmpeg command status.", options);
-    this.name = "FFmpegCommandFailed";
-    Object.setPrototypeOf(this, FFmpegCommandFailed.prototype);
-  }
-}
-
 export class EncodingProcessNotStarted extends FFmpegError {
   constructor(options: FFmpegErrorOptions) {
     super(

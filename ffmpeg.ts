@@ -48,6 +48,38 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     return this;
   }
 
+  #addEncoding = (): void => {
+    this.#encodings.push(this.#global.clone());
+    this.#encodingIndex = this.#encodings.length - 1;
+  };
+
+  async encode(): Promise<void> {
+    for await (const process of this) {
+      process.run();
+      for await (const event of process) {
+        if (event.type === "error") {
+          process.close();
+          throw event.error;
+        }
+      }
+      process.close();
+    }
+  }
+
+  next(): Promise<IteratorResult<EncodingProcess, null>> {
+    if (this.#iteratorCount < this.#encodings.length) {
+      const encoding: Encoding = this.#encodings[this.#iteratorCount++];
+      return Promise.resolve({
+        value: new EncodingProcess(encoding),
+        done: false,
+      });
+    }
+    return Promise.resolve({
+      done: true,
+      value: null,
+    });
+  }
+
   /**************************************************
    *** Encoding Options: ****************************
    *************************************************/
@@ -302,36 +334,4 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     this.encoding.addEventListener(event as any, listener as any);
     return this;
   }
-
-  async encode(): Promise<void> {
-    for await (const process of this) {
-      process.run();
-      for await (const event of process) {
-        if (event.type === "error") {
-          process.close();
-          throw event.error;
-        }
-      }
-      process.close();
-    }
-  }
-
-  next(): Promise<IteratorResult<EncodingProcess, null>> {
-    if (this.#iteratorCount < this.#encodings.length) {
-      const encoding: Encoding = this.#encodings[this.#iteratorCount++];
-      return Promise.resolve({
-        value: new EncodingProcess(encoding),
-        done: false,
-      });
-    }
-    return Promise.resolve({
-      done: true,
-      value: null,
-    });
-  }
-
-  #addEncoding = (): void => {
-    this.#encodings.push(this.#global.clone());
-    this.#encodingIndex = this.#encodings.length - 1;
-  };
 }

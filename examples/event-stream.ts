@@ -1,3 +1,5 @@
+#!/usr/bin/env deno run --unstable --allow-read --allow-run
+
 import { wait } from "https://deno.land/x/wait@0.1.7/mod.ts";
 import type { EncodingEvent } from "../events.ts";
 import type { EncodingProcess } from "../encoding_process.ts";

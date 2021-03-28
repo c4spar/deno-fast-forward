@@ -1,3 +1,5 @@
+#!/usr/bin/env deno run --unstable --allow-read --allow-run
+
 import { ffmpeg } from "../ffmpeg.ts";
 
 await ffmpeg("https://www.w3schools.com/html/mov_bbb.mp4")
