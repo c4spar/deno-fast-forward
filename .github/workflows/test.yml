@@ -8,13 +8,13 @@ on:
 
 jobs:
   test:
-    name: Test source
+    name: Deno Stable
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        deno_version: [ v1.2.0, v1.x ]
+        os: [ macOS-latest, windows-latest, ubuntu-latest ]
+        deno: [ v1.6.2, v1.x ]
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
@@ -22,14 +22,31 @@ jobs:
       - name: Setup Deno
         uses: denolib/setup-deno@v2
         with:
-          deno-version: ${{ matrix.deno_version }}
+          deno-version: ${{ matrix.deno }}
 
       - name: Setup FFmpeg
-        run: >
-          sudo add-apt-repository ppa:jonathonf/ffmpeg-4 &&
-          sudo apt update &&
-          sudo apt install ffmpeg &&
-          ffmpeg -version
+        uses: FedericoCarboni/setup-ffmpeg@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check FFmpeg
+        run: ffmpeg -version && ffprobe -version
 
       - name: Run tests
+        if: ${{ matrix.deno != 'v1.x' }}
         run: deno test --allow-read --allow-run --allow-write
+
+      - name: Run tests
+        if: ${{ matrix.deno == 'v1.x' }}
+        run: deno test --unstable --allow-read --allow-run --allow-write --coverage=./cov
+
+      - name: Generate lcov
+        if: ${{ matrix.deno == 'v1.x' }}
+        run: deno coverage --unstable --lcov ./cov > cov.lcov
+
+      - name: Upload coverage
+        if: ${{ matrix.deno == 'v1.x' }}
+        uses: codecov/codecov-action@v1
+        with:
+          name: ${{ matrix.os }}-${{ matrix.deno }}
+          files: cov.lcov

@@ -4,13 +4,14 @@ import {
   dirname,
   ensureDir,
   exists,
+  fromFileUrl,
   MuxAsyncIterator,
 } from "./dev_deps.ts";
 import { Encoding } from "./encoding.ts";
 import { EncodingProcess } from "./encoding_process.ts";
 import { FFmpeg, ffmpeg } from "./ffmpeg.ts";
 
-const rootDir: string = dirname(import.meta.url).replace(/^file:\/\//, "");
+const rootDir: string = dirname(fromFileUrl(import.meta.url));
 const inputPath = `${rootDir}/fixtures/sample.mp4`;
 
 // Deno.test("test", async () => {

@@ -4,6 +4,7 @@ import {
   assertNotEquals,
   dirname,
   ensureDir,
+  fromFileUrl,
 } from "./dev_deps.ts";
 import {
   EncodingEndEvent,
@@ -13,7 +14,7 @@ import {
 } from "./events.ts";
 import { FFmpeg } from "./ffmpeg.ts";
 
-const rootDir: string = dirname(import.meta.url).replace(/^file:\/\//, "");
+const rootDir: string = dirname(fromFileUrl(import.meta.url));
 const inputPath = `${rootDir}/fixtures/sample.mp4`;
 
 function registerEventListener(encoder: FFmpeg): Array<EncodingEvent | Error> {
