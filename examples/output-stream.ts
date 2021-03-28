@@ -1,3 +1,5 @@
+#!/usr/bin/env deno run --unstable --allow-read --allow-write --allow-run
+
 import type { EncodingProcess } from "../mod.ts";
 import { ffmpeg } from "../mod.ts";
 

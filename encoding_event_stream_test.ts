@@ -25,7 +25,7 @@ Deno.test({
     encoding.input = inputPath;
     encoding.output = outputPath;
     encoding.override = true;
-    encoding.width = 200;
+    encoding.width = 1600;
 
     const encodingProcess = new EncodingProcess(encoding);
     const eventStream = new EncodingEventStream(encodingProcess);
