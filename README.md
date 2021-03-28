@@ -10,7 +10,7 @@
     <img alt="Version" src="https://img.shields.io/github/v/release/c4spar/deno-fast-forward?logo=github&color=blue&label=latest" />
   </a>
   <a href="https://deno.land/">
-    <img alt="Deno version" src="https://img.shields.io/badge/deno-^1.2.0-blue?logo=deno" />
+    <img alt="Deno version" src="https://img.shields.io/badge/deno-^1.6.2-blue?logo=deno" />
   </a>
   <a href="https://doc.deno.land/https/deno.land/x/fast_forward/mod.ts">
     <img alt="doc" src="https://img.shields.io/badge/deno-doc-yellow?logo=deno" />
