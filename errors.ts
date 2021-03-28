@@ -131,9 +131,7 @@ function getFFprobeErrorMessage(message: string, {
   }
   message += `\n  ${bold("FFprobe binary:")} ${inspect(binary)}`;
   message += `\n  ${bold("Input file:")} ${inspect(inputFile)}`;
-  message += `\n  ${bold("Working directory:")} ${
-    inspect(cwd ?? Deno.cwd())
-  }`;
+  message += `\n  ${bold("Working directory:")} ${inspect(cwd ?? Deno.cwd())}`;
   if (cmd) {
     message += `\n  ${bold("FFprobe command:")} ${inspect(cmd.join(" "))}`;
   }
