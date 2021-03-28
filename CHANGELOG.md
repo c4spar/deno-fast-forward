@@ -22,7 +22,8 @@
 
 ### Documentation Updates
 
-- update badges ([4bd703f](https://github.com/c4spar/deno-fast-forward/commit/4bd703f))
+- update badges
+  ([4bd703f](https://github.com/c4spar/deno-fast-forward/commit/4bd703f))
 
 # [v0.1.1](https://github.com/c4spar/deno-fast-forward/compare/0.1.0...60b9e38) (2020-12-12)
 
