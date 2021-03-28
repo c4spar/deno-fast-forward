@@ -124,23 +124,21 @@ function getFFprobeErrorMessage(message: string, {
   message = red(message);
   message += `\n`;
   if (status) {
-    message += `\n  ${bold("Exit code:")} ${Deno.inspect(status.code)}`;
+    message += `\n  ${bold("Exit code:")} ${inspect(status.code)}`;
     if (typeof status?.signal === "number") {
-      message += `\n  ${bold("Signal:")} ${Deno.inspect(status.signal)}`;
+      message += `\n  ${bold("Signal:")} ${inspect(status.signal)}`;
     }
   }
-  message += `\n  ${bold("FFprobe binary:")} ${Deno.inspect(binary)}`;
-  message += `\n  ${bold("Input file:")} ${Deno.inspect(inputFile)}`;
+  message += `\n  ${bold("FFprobe binary:")} ${inspect(binary)}`;
+  message += `\n  ${bold("Input file:")} ${inspect(inputFile)}`;
   message += `\n  ${bold("Working directory:")} ${
-    Deno.inspect(cwd ?? Deno.cwd())
+    inspect(cwd ?? Deno.cwd())
   }`;
   if (cmd) {
-    message += `\n  ${bold("FFprobe command:")} ${Deno.inspect(cmd.join(" "))}`;
+    message += `\n  ${bold("FFprobe command:")} ${inspect(cmd.join(" "))}`;
   }
   if (previous) {
-    message += `\n  ${bold("Original error:")} ${
-      Deno.inspect(previous.toString())
-    }`;
+    message += `\n  ${bold("Original error:")} ${previous.stack}`;
   }
   message += `\n`;
   if (stderrOutput) {
@@ -161,24 +159,22 @@ function getFFmpegErrorMessage(message: string, {
   message = red(message);
   message += `\n`;
   if (status) {
-    message += `\n  ${bold("Exit code:")} ${Deno.inspect(status.code)}`;
+    message += `\n  ${bold("Exit code:")} ${inspect(status.code)}`;
     if (typeof status?.signal === "number") {
-      message += `\n  ${bold("Signal:")} ${Deno.inspect(status.signal)}`;
+      message += `\n  ${bold("Signal:")} ${inspect(status.signal)}`;
     }
   }
-  message += `\n  ${bold("FFmpeg binary:")} ${Deno.inspect(encoding.binary)}`;
-  message += `\n  ${bold("Input file:")} ${Deno.inspect(encoding.input)}`;
-  message += `\n  ${bold("Output file:")} ${Deno.inspect(encoding.output)}`;
+  message += `\n  ${bold("FFmpeg binary:")} ${inspect(encoding.binary)}`;
+  message += `\n  ${bold("Input file:")} ${inspect(encoding.input)}`;
+  message += `\n  ${bold("Output file:")} ${inspect(encoding.output)}`;
   message += `\n  ${bold("Working directory:")} ${
-    Deno.inspect(encoding.cwd ?? Deno.cwd())
+    inspect(encoding.cwd ?? Deno.cwd())
   }`;
   if (cmd) {
-    message += `\n  ${bold("FFmpeg command:")} ${Deno.inspect(cmd.join(" "))}`;
+    message += `\n  ${bold("FFmpeg command:")} ${inspect(cmd.join(" "))}`;
   }
   if (previous) {
-    message += `\n  ${bold("Original error:")} ${
-      Deno.inspect(previous.toString())
-    }`;
+    message += `\n  ${bold("Original error:")} ${previous.stack}`;
   }
   message += `\n`;
   if (stderrOutput) {
@@ -187,4 +183,8 @@ function getFFmpegErrorMessage(message: string, {
   }
 
   return message;
+}
+
+function inspect(value: unknown): string {
+  return Deno.inspect(value, { colors: true });
 }
