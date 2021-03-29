@@ -48,11 +48,6 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     return this;
   }
 
-  #addEncoding = (): void => {
-    this.#encodings.push(this.#global.clone());
-    this.#encodingIndex = this.#encodings.length - 1;
-  };
-
   async encode(): Promise<void> {
     for await (const process of this) {
       process.run();
@@ -79,6 +74,11 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
       value: null,
     });
   }
+
+  #addEncoding = (): void => {
+    this.#encodings.push(this.#global.clone());
+    this.#encodingIndex = this.#encodings.length - 1;
+  };
 
   /**************************************************
    *** Encoding Options: ****************************
