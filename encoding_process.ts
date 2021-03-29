@@ -75,7 +75,7 @@ export class EncodingProcess {
     return this.#process;
   }
 
-  run = (): this => {
+  run(): this {
     if (this.#process) {
       throw new EncodingProcessAlreadyStarted({
         encoding: this.#encoding,
@@ -114,9 +114,9 @@ export class EncodingProcess {
     }
     void this.#handleEvents();
     return this;
-  };
+  }
 
-  status = (): Promise<EncodingStatus> => {
+  status(): Promise<EncodingStatus> {
     if (!this.#statusPromise) {
       this.#statusPromise = new Promise((resolve, reject) => {
         (async () => {
@@ -135,9 +135,9 @@ export class EncodingProcess {
       });
     }
     return this.#statusPromise;
-  };
+  }
 
-  output = (): Promise<Uint8Array> => {
+  output(): Promise<Uint8Array> {
     if (!this.#outputPromise) {
       this.#outputPromise = new Promise((resolve, reject) => {
         (async () => {
@@ -151,9 +151,9 @@ export class EncodingProcess {
       });
     }
     return this.#outputPromise;
-  };
+  }
 
-  stderrOutput = (): Promise<Uint8Array> => {
+  stderrOutput(): Promise<Uint8Array> {
     if (!this.#stderrOutputPromise) {
       this.#stderrOutputPromise = new Promise((resolve, reject) => {
         (async () => {
@@ -167,7 +167,7 @@ export class EncodingProcess {
       });
     }
     return this.#stderrOutputPromise;
-  };
+  }
 
   kill(signo: number): void {
     this.process.kill(signo);
