@@ -174,22 +174,8 @@ export class EncodingProcess {
   };
 
   close() {
-    try {
-      this.process.stdin?.close();
-      // deno-lint-ignore no-empty
-    } catch {}
-    try {
-      this.process.stdout?.close();
-      // deno-lint-ignore no-empty
-    } catch {}
-    try {
-      this.process.stderr?.close();
-      // deno-lint-ignore no-empty
-    } catch {}
-    try {
-      this.process.close();
-      // deno-lint-ignore no-empty
-    } catch {}
+    this.stdin?.close();
+    this.process.close();
   }
 
   #handleEvents = async (): Promise<void> => {
