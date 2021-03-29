@@ -169,9 +169,9 @@ export class EncodingProcess {
     return this.#stderrOutputPromise;
   }
 
-  kill = async (signo: number): Promise<void> => {
-    await this.process.kill(signo);
-  };
+  kill(signo: number): void {
+    this.process.kill(signo);
+  }
 
   close() {
     this.stdin?.close();
