@@ -12,7 +12,7 @@ interface FFmpegErrorOptions {
 }
 
 interface FFprobeErrorOptions {
-  inputFile: string;
+  inputFile?: string;
   status?: EncodingStatus;
   stderrOutput?: ArrayBuffer;
   cmd?: string[];

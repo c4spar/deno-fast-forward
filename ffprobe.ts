@@ -107,6 +107,7 @@ export interface FFprobeOptions {
 
 export interface FFprobeRunOptions extends FFprobeOptions {
   cmd?: Array<string>;
+  input?: string;
 }
 
 export function ffprobe(
@@ -122,6 +123,7 @@ export async function getMediaInfo(
 ): Promise<MediaInfo> {
   const output: string = await run({
     ...options,
+    input,
     cmd: [
       "-print_format",
       "json",
@@ -320,7 +322,7 @@ export async function getAvailableEncoders(
 }
 
 async function run(
-  { cwd, binary = "ffprobe", cmd = [] }: FFprobeRunOptions,
+  { input, cwd, binary = "ffprobe", cmd = [] }: FFprobeRunOptions,
 ): Promise<string> {
   let process: Deno.Process;
   cmd = [binary, "-hide_banner", ...cmd];
@@ -359,7 +361,7 @@ async function run(
     throw new FFprobeCommandFailed({
       binary,
       cwd,
-      inputFile: input,
+      inputFile: "",
       cmd,
       status,
       stderrOutput: await process.stderrOutput(),
