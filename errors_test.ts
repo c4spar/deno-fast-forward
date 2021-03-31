@@ -50,7 +50,7 @@ Deno.test({
   name: "ffprobe command failed error",
   async fn() {
     await assertThrowsAsync(
-      () => ffprobe(inputPath, { args: ["--abc"] }),
+      () => ffprobe("foo"),
       FFprobeCommandFailed,
     );
   },
