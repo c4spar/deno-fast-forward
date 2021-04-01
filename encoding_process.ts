@@ -217,9 +217,9 @@ export class EncodingProcess {
     }
     const videoStream: VideoStream = info.streams
       .find((stream: MediaStream) =>
-        stream.codec_type === "video"
+        stream.codecType === "video"
       ) as VideoStream;
-    const totalFrames = Number(videoStream.nb_frames);
+    const totalFrames = Number(videoStream.nbFrames);
 
     for await (const chunk of Deno.iter(this.process.stdout)) {
       const progressInfo: ProgressInfo = parseProgressOutput(chunk);
@@ -298,10 +298,10 @@ function parseProgressOutput(chunk: Uint8Array): ProgressInfo {
   return new TextDecoder()
     .decode(chunk)
     .trim()
-    .split("\n")
-    .map((line: string) => line.split("="))
-    .reduce((previous: Record<string, string>, current: string[]) => {
-      previous[current[0]] = current[1];
+    .split(/\r?\n/g)
+    .map((line: string) => line.split("=", 2))
+    .reduce((previous: Record<string, string>, [name, value]: string[]) => {
+      previous[name] = value;
       return previous;
       // deno-lint-ignore no-explicit-any
     }, {}) as any;
