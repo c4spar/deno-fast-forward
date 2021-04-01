@@ -20,11 +20,27 @@ Deno.test({
   async fn() {
     const mediaInfo: MediaInfo = await ffprobe(inputPath);
     const expectedMediaInfo = getExpectedMediaInfo();
+    // deno-lint-ignore no-explicit-any
     assertObjectMatch(mediaInfo.format as any, expectedMediaInfo.format as any);
     assertEquals(mediaInfo.streams.length, 3);
-    assertObjectMatch(mediaInfo.streams[0] as any, expectedMediaInfo.streams[0] as any);
-    assertObjectMatch(mediaInfo.streams[1] as any, expectedMediaInfo.streams[1] as any);
-    assertObjectMatch(mediaInfo.streams[2] as any, expectedMediaInfo.streams[2] as any);
+    assertObjectMatch(
+      // deno-lint-ignore no-explicit-any
+      mediaInfo.streams[0] as any,
+      // deno-lint-ignore no-explicit-any
+      expectedMediaInfo.streams[0] as any,
+    );
+    assertObjectMatch(
+      // deno-lint-ignore no-explicit-any
+      mediaInfo.streams[1] as any,
+      // deno-lint-ignore no-explicit-any
+      expectedMediaInfo.streams[1] as any,
+    );
+    assertObjectMatch(
+      // deno-lint-ignore no-explicit-any
+      mediaInfo.streams[2] as any,
+      // deno-lint-ignore no-explicit-any
+      expectedMediaInfo.streams[2] as any,
+    );
   },
 });
 
