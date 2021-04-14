@@ -1,3 +1,31 @@
+# [v0.1.3](https://github.com/c4spar/deno-cli/compare/0.1.2...0.1.3) (2021-04-14)
+
+### Code Refactoring
+
+- make kill method of encoding process sync (#8)
+  ([b37e594](https://github.com/c4spar/deno-cli/commit/b37e594))
+- refactor close method of encoding process (#7)
+  ([22eef37](https://github.com/c4spar/deno-cli/commit/22eef37))
+- replace deprecated Deno.iter with iter from deno/std (#11)
+  ([0f9ad63](https://github.com/c4spar/deno-cli/commit/0f9ad63))
+
+### Style
+
+- use methods instead of properties (#9)
+  ([aafbb09](https://github.com/c4spar/deno-cli/commit/aafbb09))
+
+### Chore
+
+- fmt changelog ([984392a](https://github.com/c4spar/deno-cli/commit/984392a))
+- **upgrade:** deno/std v0.93.0 (#11)
+  ([0f9ad63](https://github.com/c4spar/deno-cli/commit/0f9ad63))
+
+### Documentation Updates
+
+- fix typo ([3aa3fd7](https://github.com/c4spar/deno-cli/commit/3aa3fd7))
+- fix github urls in changelog
+  ([93c0bc2](https://github.com/c4spar/deno-cli/commit/93c0bc2))
+
 # [v0.1.2](https://github.com/c4spar/deno-fast-forward/compare/0.1.1...0.1.2) (2021-03-29)
 
 ### Bug Fixes
