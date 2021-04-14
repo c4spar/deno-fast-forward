@@ -152,7 +152,7 @@ There are to different ways to await the status. The first one is using the
 `.status()` method, same like with the deno process.
 
 ```typescript
-for await (const process: EndofingProcess of encoder) {
+for await (const process: EncodingProcess of encoder) {
   process.run();
   const status: EncodingStatus = await process.status();
   if (!status.success) {
@@ -170,7 +170,7 @@ status is success, if the status is not success or any encoding error occurs an
 error event is emitted.
 
 ```typescript
-for await (const process: EndofingProcess of encoder) {
+for await (const process: EncodingProcess of encoder) {
   process.run();
   for await (const event: EncodingEvent of process) {
     switch (event.type) {
