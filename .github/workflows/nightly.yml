@@ -30,11 +30,5 @@ jobs:
       - name: Check FFmpeg
         run: ffmpeg -version && ffprobe -version
 
-      - name: Check formatting
-        run: deno fmt --check
-
-      - name: Run linter
-        run: deno lint --unstable
-
       - name: Run tests
         run: deno test --allow-read --allow-run --allow-write
