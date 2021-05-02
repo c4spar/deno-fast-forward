@@ -56,19 +56,19 @@ following registries.
 [Deno Registry](https://deno.land/x/fast_forward)
 
 ```typescript
-import { ffmpeg } from "https://deno.land/x/fast_forward@<version>/prompt/mod.ts";
+import { ffmpeg } from "https://deno.land/x/fast_forward@<version>/mod.ts";
 ```
 
 [Nest Registry](https://nest.land/package/fast_forward)
 
 ```typescript
-import { ffmpeg } from "https://x.nest.land/fast_forward@<version>/prompt/mod.ts";
+import { ffmpeg } from "https://x.nest.land/fast_forward@<version>/mod.ts";
 ```
 
 [Github](https://github.com/c4spar/deno-fast-forward)
 
 ```typescript
-import { ffmpeg } from "https://raw.githubusercontent.com/c4spar/deno-fast-forward/<version>/prompt/mod.ts";
+import { ffmpeg } from "https://raw.githubusercontent.com/c4spar/deno-fast-forward/<version>/mod.ts";
 ```
 
 ## Usage
