@@ -14,13 +14,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Deno
-        uses: denolib/setup-deno@v2
+        uses: denoland/setup-deno@v1
         with:
           deno-version: v1.8.x
 
       - name: Setup eggs
         run: >
-          deno install --unstable --allow-all https://x.nest.land/eggs@0.3.6/eggs.ts &&
+          deno install --unstable --allow-all https://x.nest.land/eggs@0.3.7/eggs.ts &&
           eggs link "${NEST_TOKEN}"
         env:
           NEST_TOKEN: ${{ secrets.NEST_TOKEN }}

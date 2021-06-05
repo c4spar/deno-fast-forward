@@ -12,13 +12,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ macOS-latest, windows-latest, ubuntu-latest ]
-        deno_version: [ nightly ]
+        deno_version: [ canary ]
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
 
       - name: Setup Deno
-        uses: denolib/setup-deno@v2
+        uses: denoland/setup-deno@v1
         with:
           deno-version: ${{ matrix.deno_version }}
 
@@ -26,9 +26,6 @@ jobs:
         uses: FedericoCarboni/setup-ffmpeg@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Check FFmpeg
-        run: ffmpeg -version && ffprobe -version
 
       - name: Run tests
         run: deno test --allow-read --allow-run --allow-write
