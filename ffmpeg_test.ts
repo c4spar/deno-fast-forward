@@ -14,26 +14,6 @@ import { FFmpeg, ffmpeg } from "./ffmpeg.ts";
 const rootDir: string = dirname(fromFileUrl(import.meta.url));
 const inputPath = `${rootDir}/fixtures/sample.mp4`;
 
-// Deno.test("test", async () => {
-//   const p = Deno.run({
-//     cmd: [
-//       Deno.execPath(),
-//       "-V",
-//     ],
-//     stdout: "piped"
-//   });
-//
-//   setTimeout(async () => {
-//     if (p.stdout) {
-//       for await (const line of readLines(p.stdout)) {
-//         console.log("line: %s", line);
-//       }
-//     }
-//   }, 200);
-//
-//   await p.status();
-// });
-
 Deno.test({
   name: "ffmpeg encode",
   async fn() {
@@ -157,7 +137,6 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg encoding options",
-  // ignore: Deno.build.os === "windows",
   async fn() {
     const outputPath = `${rootDir}/.tmp/ffmpeg encoding.mp4`;
     await ensureDir(`${rootDir}/.tmp`);
