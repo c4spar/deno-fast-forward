@@ -157,7 +157,7 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg encoding options",
-  ignore: Deno.build.os === "windows",
+  // ignore: Deno.build.os === "windows",
   async fn() {
     const outputPath = `${rootDir}/.tmp/ffmpeg encoding.mp4`;
     await ensureDir(`${rootDir}/.tmp`);
@@ -190,7 +190,7 @@ Deno.test({
       // .rotate(-180)
       .noAudio(false)
       .noVideo(false)
-      .logLevel("repeat+level+verbose")
+      // .logLevel("repeat+level+verbose")
       .args([]);
 
     assertEquals(encoder.encoding instanceof Encoding, true);
