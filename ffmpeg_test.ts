@@ -114,7 +114,6 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg multiplexing",
-  ignore: Deno.build.os === "windows",
   async fn() {
     const outputPath1 = `${rootDir}/.tmp/ffmpeg multiplexing 1.1.mp4`;
     const outputPath2 = `${rootDir}/.tmp/ffmpeg multiplexing 1.2.mp4`;
