@@ -158,6 +158,7 @@ Deno.test({
 
 Deno.test({
   name: "ffmpeg encoding options",
+  ignore: Deno.build.os === "windows",
   async fn() {
     const outputPath = `${rootDir}/.tmp/ffmpeg encoding.mp4`;
     await ensureDir(`${rootDir}/.tmp`);
