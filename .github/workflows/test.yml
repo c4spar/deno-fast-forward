@@ -31,19 +31,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests
-        if: ${{ matrix.deno != 'v1.x' }}
-        run: deno test --allow-read --allow-run --allow-write
-
-      - name: Run tests
-        if: ${{ matrix.deno == 'v1.x' }}
         run: deno test --unstable --allow-read --allow-run --allow-write --coverage=./cov
 
       - name: Generate lcov
-        if: ${{ matrix.deno == 'v1.x' }}
         run: deno coverage --unstable --lcov ./cov > cov.lcov
 
       - name: Upload coverage
-        if: ${{ matrix.deno == 'v1.x' }}
         uses: codecov/codecov-action@v1
         with:
           name: ${{ matrix.os }}-${{ matrix.deno }}
