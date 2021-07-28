@@ -10,7 +10,10 @@ export { exists } from "https://deno.land/std@0.103.0/fs/exists.ts";
 
 export { ensureDir } from "https://deno.land/std@0.103.0/fs/ensure_dir.ts";
 
-export { dirname, fromFileUrl } from "https://deno.land/std@0.103.0/path/mod.ts";
+export {
+  dirname,
+  fromFileUrl,
+} from "https://deno.land/std@0.103.0/path/mod.ts";
 
 export {
   MuxAsyncIterator,
