@@ -1,3 +1,21 @@
+# [v0.1.4](https://github.com/c4spar/deno-cli/compare/0.1.3...v0.1.4) (2021-07-28)
+
+### Chore
+
+- **ci:** upgrade to eggs@0.3.8
+  ([7c80480](https://github.com/c4spar/deno-cli/commit/7c80480))
+- **ci:** clean up workflow
+  ([5091884](https://github.com/c4spar/deno-cli/commit/5091884))
+- **ci:** switch to denoland/setup-deno action, update eggs to 0.3.7 and fix
+  windows test's (#12)
+  ([b84ae79](https://github.com/c4spar/deno-cli/commit/b84ae79))
+- **ci:** remove fmt and lint step from nightly workflow
+  ([8cc7619](https://github.com/c4spar/deno-cli/commit/8cc7619))
+- **ci:** upgrade to eggs@0.3.6
+  ([ea77ad3](https://github.com/c4spar/deno-cli/commit/ea77ad3))
+- **upgrade:** deno/std v0.103.0 (#13)
+  ([9d07d46](https://github.com/c4spar/deno-cli/commit/9d07d46))
+
 # [v0.1.3](https://github.com/c4spar/deno-cli/compare/0.1.2...0.1.3) (2021-04-14)
 
 ### Code Refactoring
