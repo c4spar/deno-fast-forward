@@ -2,6 +2,7 @@
 
 import type { EncodingProcess } from "../mod.ts";
 import { ffmpeg } from "../mod.ts";
+import { copy } from "../deps.ts";
 
 const encoder = ffmpeg("https://www.w3schools.com/html/mov_bbb.mp4")
   .output("pipe:1")
@@ -19,7 +20,7 @@ for await (const process: EncodingProcess of encoder) {
     });
     const [status] = await Promise.all([
       process.status(),
-      Deno.copy(process.stdout, outputFile),
+      copy(process.stdout, outputFile),
     ]);
     console.log({ status });
   }
