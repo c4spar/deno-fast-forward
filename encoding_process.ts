@@ -169,7 +169,7 @@ export class EncodingProcess {
     return this.#stderrOutputPromise;
   }
 
-  kill(signo: number): void {
+  kill(signo: string): void {
     this.process.kill(signo);
   }
 
