@@ -80,9 +80,7 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     this.#encodingIndex = this.#encodings.length - 1;
   };
 
-  /**************************************************
-   *** Encoding Options: ****************************
-   *************************************************/
+  // Encoding Options:
 
   input(source: string): this {
     this.encoding.input = source;
@@ -115,9 +113,7 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     return this;
   }
 
-  /**************************************************
-   *** Input / Output Options: **********************
-   **************************************************/
+  // Input / Output Options:
 
   args(ffmpegArgs: string[]): this {
     this.encoding.args = ffmpegArgs;
@@ -232,15 +228,11 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     return this;
   }
 
-  /**************************************************
-   *** Input Only Options: **************************
-   **************************************************/
+  // Input Only Options:
 
   // ...
 
-  /**************************************************
-   *** Output Only Options: *************************
-   **************************************************/
+  // Output Only Options:
 
   audioBitrate(bitrate: number | string): this {
     this.encoding.audioBitrate = bitrate;
@@ -302,9 +294,7 @@ export class FFmpeg implements AsyncIterableIterator<EncodingProcess> {
     return this;
   }
 
-  /**************************************************
-   *** Methods: *************************************
-   **************************************************/
+  // Methods:
 
   addEventListener(
     event: "info",
