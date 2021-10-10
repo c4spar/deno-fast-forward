@@ -1,3 +1,16 @@
+# [v0.1.5](https://github.com/c4spar/deno-cli/compare/0.1.4...0.1.5) (2021-10-10)
+
+### Bug Fixes
+
+- fix kill typings
+  ([6ff6c1d](https://github.com/c4spar/deno-cli/commit/6ff6c1d))
+
+### Chore
+
+- fmt ([ebddaa5](https://github.com/c4spar/deno-cli/commit/ebddaa5))
+- **ci:** upgrade eggs to 0.3.9
+  ([4f6a930](https://github.com/c4spar/deno-cli/commit/4f6a930))
+
 # [v0.1.4](https://github.com/c4spar/deno-cli/compare/0.1.3...v0.1.4) (2021-07-28)
 
 ### Chore
