@@ -1,61 +1,77 @@
-# [v0.1.5](https://github.com/c4spar/deno-cli/compare/0.1.4...0.1.5) (2021-10-10)
+# [0.1.6](https://github.com/c4spar/deno-fast-forward/compare/0.1.5...0.1.6) (Dec 3, 2021)
+
+### Bug Fixes
+
+- use Signal type (#15)
+  ([0474d80](https://github.com/c4spar/deno-fast-forward/commit/0474d80))
+
+### Chore
+
+- **ci:** update release workflow
+  ([e6697d6](https://github.com/c4spar/deno-fast-forward/commit/e6697d6))
+- **upgrade:** deno/std v0.116.0 (#16)
+  ([835f343](https://github.com/c4spar/deno-fast-forward/commit/835f343))
+
+# [v0.1.5](https://github.com/c4spar/deno-fast-forward/compare/0.1.4...0.1.5) (2021-10-10)
 
 ### Bug Fixes
 
 - fix kill typings
-  ([6ff6c1d](https://github.com/c4spar/deno-cli/commit/6ff6c1d))
+  ([6ff6c1d](https://github.com/c4spar/deno-fast-forward/commit/6ff6c1d))
 
 ### Chore
 
-- fmt ([ebddaa5](https://github.com/c4spar/deno-cli/commit/ebddaa5))
+- fmt ([ebddaa5](https://github.com/c4spar/deno-fast-forward/commit/ebddaa5))
 - **ci:** upgrade eggs to 0.3.9
-  ([4f6a930](https://github.com/c4spar/deno-cli/commit/4f6a930))
+  ([4f6a930](https://github.com/c4spar/deno-fast-forward/commit/4f6a930))
 
-# [v0.1.4](https://github.com/c4spar/deno-cli/compare/0.1.3...v0.1.4) (2021-07-28)
+# [v0.1.4](https://github.com/c4spar/deno-fast-forward/compare/0.1.3...v0.1.4) (2021-07-28)
 
 ### Chore
 
 - **ci:** upgrade to eggs@0.3.8
-  ([7c80480](https://github.com/c4spar/deno-cli/commit/7c80480))
+  ([7c80480](https://github.com/c4spar/deno-fast-forward/commit/7c80480))
 - **ci:** clean up workflow
-  ([5091884](https://github.com/c4spar/deno-cli/commit/5091884))
+  ([5091884](https://github.com/c4spar/deno-fast-forward/commit/5091884))
 - **ci:** switch to denoland/setup-deno action, update eggs to 0.3.7 and fix
   windows test's (#12)
-  ([b84ae79](https://github.com/c4spar/deno-cli/commit/b84ae79))
+  ([b84ae79](https://github.com/c4spar/deno-fast-forward/commit/b84ae79))
 - **ci:** remove fmt and lint step from nightly workflow
-  ([8cc7619](https://github.com/c4spar/deno-cli/commit/8cc7619))
+  ([8cc7619](https://github.com/c4spar/deno-fast-forward/commit/8cc7619))
 - **ci:** upgrade to eggs@0.3.6
-  ([ea77ad3](https://github.com/c4spar/deno-cli/commit/ea77ad3))
+  ([ea77ad3](https://github.com/c4spar/deno-fast-forward/commit/ea77ad3))
 - **upgrade:** deno/std v0.103.0 (#13)
-  ([9d07d46](https://github.com/c4spar/deno-cli/commit/9d07d46))
+  ([9d07d46](https://github.com/c4spar/deno-fast-forward/commit/9d07d46))
 
-# [v0.1.3](https://github.com/c4spar/deno-cli/compare/0.1.2...0.1.3) (2021-04-14)
+# [v0.1.3](https://github.com/c4spar/deno-fast-forward/compare/0.1.2...0.1.3) (2021-04-14)
 
 ### Code Refactoring
 
 - make kill method of encoding process sync (#8)
-  ([b37e594](https://github.com/c4spar/deno-cli/commit/b37e594))
+  ([b37e594](https://github.com/c4spar/deno-fast-forward/commit/b37e594))
 - refactor close method of encoding process (#7)
-  ([22eef37](https://github.com/c4spar/deno-cli/commit/22eef37))
+  ([22eef37](https://github.com/c4spar/deno-fast-forward/commit/22eef37))
 - replace deprecated Deno.iter with iter from deno/std (#11)
-  ([0f9ad63](https://github.com/c4spar/deno-cli/commit/0f9ad63))
+  ([0f9ad63](https://github.com/c4spar/deno-fast-forward/commit/0f9ad63))
 
 ### Style
 
 - use methods instead of properties (#9)
-  ([aafbb09](https://github.com/c4spar/deno-cli/commit/aafbb09))
+  ([aafbb09](https://github.com/c4spar/deno-fast-forward/commit/aafbb09))
 
 ### Chore
 
-- fmt changelog ([984392a](https://github.com/c4spar/deno-cli/commit/984392a))
+- fmt changelog
+  ([984392a](https://github.com/c4spar/deno-fast-forward/commit/984392a))
 - **upgrade:** deno/std v0.93.0 (#11)
-  ([0f9ad63](https://github.com/c4spar/deno-cli/commit/0f9ad63))
+  ([0f9ad63](https://github.com/c4spar/deno-fast-forward/commit/0f9ad63))
 
 ### Documentation Updates
 
-- fix typo ([3aa3fd7](https://github.com/c4spar/deno-cli/commit/3aa3fd7))
+- fix typo
+  ([3aa3fd7](https://github.com/c4spar/deno-fast-forward/commit/3aa3fd7))
 - fix github urls in changelog
-  ([93c0bc2](https://github.com/c4spar/deno-cli/commit/93c0bc2))
+  ([93c0bc2](https://github.com/c4spar/deno-fast-forward/commit/93c0bc2))
 
 # [v0.1.2](https://github.com/c4spar/deno-fast-forward/compare/0.1.1...0.1.2) (2021-03-29)
 
