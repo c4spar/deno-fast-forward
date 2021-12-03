@@ -1,7 +1,7 @@
 import { assertExpectError, assertInstanceOf } from "./_assertions.ts";
 import {
+  assertRejects,
   assertThrows,
-  assertThrowsAsync,
   dirname,
   fromFileUrl,
 } from "./dev_deps.ts";
@@ -29,7 +29,7 @@ const inputPath = `${rootDir}/fixtures/sample.mp4`;
 Deno.test({
   name: "ffprobe binary not found error",
   async fn() {
-    await assertThrowsAsync(
+    await assertRejects(
       () => ffprobe(inputPath, { binary: "fffprobe" }),
       FFprobeBinaryNotFound,
     );
@@ -39,7 +39,7 @@ Deno.test({
 Deno.test({
   name: "ffprobe binary permission denied error",
   async fn() {
-    await assertThrowsAsync(
+    await assertRejects(
       () => ffprobe(inputPath, { binary: rootDir }),
       FFprobeBinaryPermissionDenied,
     );
@@ -49,7 +49,7 @@ Deno.test({
 Deno.test({
   name: "ffprobe command failed error",
   async fn() {
-    await assertThrowsAsync(
+    await assertRejects(
       () => ffprobe(inputPath, { args: ["--abc"] }),
       FFprobeCommandFailed,
     );
@@ -108,7 +108,7 @@ Deno.test({
     encoding.binary = "ffprobe";
     const process = new EncodingProcess(encoding);
 
-    await assertThrowsAsync(
+    await assertRejects(
       () => process.status(),
       EncodingProcessNotStarted,
     );

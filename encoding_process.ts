@@ -18,7 +18,7 @@ import {
 import { FFmpegCommand } from "./ffmpeg_command.ts";
 import { ffprobe } from "./ffprobe.ts";
 import type { MediaInfo, MediaStream, VideoStream } from "./media_info.ts";
-import { Deferred, deferred, iter } from "./deps.ts";
+import { Deferred, deferred, iterateReader } from "./deps.ts";
 
 export type EncodingStatus = Deno.ProcessStatus;
 
@@ -221,7 +221,7 @@ export class EncodingProcess {
       ) as VideoStream;
     const totalFrames = Number(videoStream.nb_frames);
 
-    for await (const chunk of iter(this.process.stdout)) {
+    for await (const chunk of iterateReader(this.process.stdout)) {
       const progressInfo: ProgressInfo = parseProgressOutput(chunk);
       const frames = Number(progressInfo.frame);
       const progress: number = Math.trunc(100 / (totalFrames / frames));
